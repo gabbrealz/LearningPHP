@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import './assets/styles.css';
 
 function App() {
   return (
