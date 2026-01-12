@@ -1,7 +1,7 @@
 export default function SignUp() {
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">
-      <form className="bg-slate-100 w-100 border-2 rounded-xl px-12 py-6 flex flex-col items-center gap-4">
+      <form className="bg-gray-100 w-100 border-2 rounded-xl px-12 py-6 flex flex-col items-center gap-4">
         <h2 className="text-xl">
           SIGN UP
         </h2>
@@ -25,7 +25,7 @@ export default function SignUp() {
             <input type="password" id="signup-confirm-password" className="w-full bg-white text-sm border px-2 py-1 rounded-md" required/>
           </span>
         </div>
-        <input type="submit" id="signup-submit" value="Sign Up" className="w-4/5 text-white bg-black mt-4 border py-1 rounded-md cursor-pointer hover:scale-105 transition-[scale]" />
+        <input type="submit" id="signup-submit" value="Sign Up" className="w-4/5 text-white bg-black mt-4 border py-1 rounded-md cursor-pointer hover:bg-gray-800 transition-colors" />
       </form>
     </section>
   );
