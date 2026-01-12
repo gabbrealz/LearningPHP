@@ -4,7 +4,20 @@
 A progressive project on web programming with PHP
 
 ## How to Run
-1. Starting from the `016_LearningPHP` working directory, get the frontend dependencies
+
+### First, get the following:
+- npm
+- php
+- XAMPP
+
+### Second, Perform these commands:
+
+1. Clone the GitHub repository:
+    ```terminal
+    git clone https://github.com/gabbrealz/LearningPHP.git
+    ```
+
+1. Starting from the `016_LearningPHP` working directory, build the frontend
     ```terminal
     cd frontend
     echo "BACKEND_BASE_URL=http://localhost/php-backend" > .env
