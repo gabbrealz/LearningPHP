@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { FormInput, PasswordInput } from "../components/FormInput";
 
 export default function Login() {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">
-      <form className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-4">
-        <h2 className="text-xl">
+      <form className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-2">
+        <h2 className="text-xl mb-4">
           LOGIN
         </h2>
-        <FormInput formName="login" inputName="username-or-email" label="Username / Email" type="text" />
-        <PasswordInput formName="login" inputName="password" label="Password" />
+        <FormInput formName="login" inputName="username-or-email" label="Username / Email" type="text" value={name} setValue={setName} />
+        <PasswordInput formName="login" inputName="password" label="Password" value={password} setValue={setPassword} />
         <div className="w-4/5 flex flex-col mt-6">
           <input type="submit" id="login-submit" value="Login" className="w-full text-white bg-green-700 mb-2 border py-1.5 rounded-md cursor-pointer hover:bg-green-600 transition-colors" />
           <span className="w-full text-center text-sm">

@@ -20,7 +20,7 @@ A progressive project on web programming with PHP
 1. Starting from the `016_LearningPHP` working directory, build the frontend
     ```terminal
     cd frontend
-    echo "BACKEND_BASE_URL=http://localhost/php-backend" > .env
+    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
     npm install
     npm run build
     ```
