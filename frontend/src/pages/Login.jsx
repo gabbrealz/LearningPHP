@@ -10,7 +10,7 @@ export default function Login() {
         </h2>
         <FormInput formName="login" inputName="username-or-email" label="Username / Email" type="text" />
         <PasswordInput formName="login" inputName="password" label="Password" />
-        <div className="w-4/5 flex flex-col mt-4">
+        <div className="w-4/5 flex flex-col mt-6">
           <input type="submit" id="login-submit" value="Login" className="w-full text-white bg-green-700 mb-2 border py-1.5 rounded-md cursor-pointer hover:bg-green-600 transition-colors" />
           <span className="w-full text-center text-sm">
             Don't have an account? {" "}

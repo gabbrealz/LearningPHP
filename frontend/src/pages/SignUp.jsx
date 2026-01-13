@@ -12,7 +12,7 @@ export default function SignUp() {
         <PasswordInput formName="signup" inputName="password" label="Password" />
         <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" />
         <input type="submit" id="signup-submit" value="Sign Up"
-               className="w-4/5 text-white bg-indigo-600 mt-4 py-1.5 rounded-md cursor-pointer hover:bg-indigo-500 transition-colors" />
+               className="w-4/5 text-white bg-indigo-600 mt-6 py-1.5 rounded-md cursor-pointer hover:bg-indigo-500 transition-colors" />
       </form>
     </section>
   );
