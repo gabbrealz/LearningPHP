@@ -5,7 +5,7 @@ import { FormInput, PasswordInput } from "../components/FormInput.jsx";
 const usernamePattern = /^[A-Za-z0-9_]+$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-export default function SignUp() {
+export default function SignUp({ addToNotifs }) {
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
   const [email, setEmail] = useState("");

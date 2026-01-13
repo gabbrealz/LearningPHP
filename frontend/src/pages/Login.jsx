@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FormInput, PasswordInput } from "../components/FormInput";
 
-export default function Login() {
+export default function Login({ addToNotifs }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
