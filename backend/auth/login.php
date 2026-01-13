@@ -29,9 +29,14 @@ else {
 $username_or_email = preg_match($email_pattern, $_POST["username-or-email"]) ? "email" : "username";
 
 foreach ($data["users"] as $user) {
-    if ($_POST["username-or-email"] === $user[$username_or_email] && password_verify($_POST["password"], $user["password"])) {
-        http_response_code(200);
-        echo json_encode(["message" => "Successfully logged in!"]);
-        exit;
+    if ($_POST["username-or-email"] === $user[$username_or_email]) {
+        if (password_verify($_POST["password"], $user["password"])) {
+            http_response_code(200);
+            echo json_encode(["message" => "Successfully logged in!"]);
+            exit;   
+        }
+        break;
     }
 }
+
+echo json_encode(["error" => "Incorrect username or password."]);
