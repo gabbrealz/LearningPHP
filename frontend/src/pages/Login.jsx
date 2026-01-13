@@ -6,14 +6,12 @@ export default function Login({ addToNotifs }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const backendBaseURL = import.meta.env.VITE_BACKEND_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
 
-    let res = await fetch(`${backendBaseURL}/auth/login.php`, {
+    let res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/login.php`, {
       method: "POST",
-      body: formData,
+      body: new FormData(e.target),
       credentials: "include"
     });
 
