@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
 import Landing from './pages/Landing.jsx';
@@ -13,6 +13,15 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [notifStack, setNotifStack] = useState([]);
   const addToNotifs = (notif) => setNotifStack([...notifStack, {...notif, id: crypto.randomUUID()}]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/user.php`, {
+      method: "GET",
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => setIsAuthenticated(data));
+  }, []);
 
   return (
     <BrowserRouter>
