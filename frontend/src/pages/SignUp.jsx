@@ -55,7 +55,7 @@ export default function SignUp({ addToNotifs }) {
     }
     
     addToNotifs({
-      bgcolor: "bg-green-600",
+      bgcolor: "bg-green-700",
       message: data.message
     });
   };
