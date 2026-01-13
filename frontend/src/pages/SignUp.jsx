@@ -35,7 +35,6 @@ export default function SignUp({ addToNotifs }) {
     setConfirmPassWarning(showWarning);
   }, [password, confirmPassword]);
 
-  useEffect(() => setShowError(""), [username, email, password, confirmPassword]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
