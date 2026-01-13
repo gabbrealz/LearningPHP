@@ -53,7 +53,7 @@ foreach ($data["users"] as $user) {
         echo json_encode(["error" => "Username already exists."]);
         exit;
     }
-    if ($user["email" === $_POST["email"]]) {
+    if ($user["email"] === $_POST["email"]) {
         echo json_encode(["error" => "Email is already registered."]);
         exit;
     }
