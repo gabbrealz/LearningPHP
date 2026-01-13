@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
@@ -31,6 +31,7 @@ $username_or_email = preg_match($email_pattern, $_POST["username-or-email"]) ? "
 foreach ($data["users"] as $user) {
     if ($_POST["username-or-email"] === $user[$username_or_email]) {
         if (password_verify($_POST["password"], $user["password"])) {
+            $_SESSION["user_id"] = $user["id"];
             http_response_code(200);
             echo json_encode(["message" => "Successfully logged in!"]);
             exit;   
