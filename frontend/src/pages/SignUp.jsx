@@ -6,8 +6,6 @@ const usernamePattern = /^[A-Za-z0-9_]+$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 export default function SignUp() {
-  const backendBaseURL = import.meta.env.VITE_BACKEND_BASE_URL;
-
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
   useEffect(() => setNameWarning(username.length > 0 && !usernamePattern.test(username)), [username]);
@@ -37,9 +35,30 @@ export default function SignUp() {
   }, [password, confirmPassword]);
 
 
+  const backendBaseURL = import.meta.env.VITE_BACKEND_BASE_URL;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    let res = await fetch(`${backendBaseURL}/auth/signup.php`, {
+      method: "POST",
+      body: formData,
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.log(data.error);
+      return;
+    }
+    console.log(data.message);
+  };
+
+
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">
-      <form className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-2">
+      <form onSubmit={handleSubmit} className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-2">
         <h2 className="text-xl mb-4">
           SIGN UP
         </h2>
