@@ -8,14 +8,18 @@ const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
-  useEffect(() => setNameWarning(username.length > 0 && !usernamePattern.test(username)), [username]);
-
   const [email, setEmail] = useState("");
   const [emailWarning, setEmailWarning] = useState(false);
-  useEffect(() => setEmailWarning(email.length > 0 && !emailPattern.test(email)), [email]);
-
   const [password, setPassword] = useState("");
   const [passWarning, setPassWarning] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassWarning, setConfirmPassWarning] = useState(false);
+  const [showError, setShowError] = useState("");
+
+  useEffect(() => setNameWarning(username.length > 0 && !usernamePattern.test(username)), [username]);
+
+  useEffect(() => setEmailWarning(email.length > 0 && !emailPattern.test(email)), [email]);
+
   useEffect(() => {
     let showWarning = false;
     if (password.length > 0 && (password.length < 8 || !/\d/.test(password) || !/[A-Z]/.test(password)))
@@ -24,8 +28,6 @@ export default function SignUp() {
     setPassWarning(showWarning);
   }, [password]);
 
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [confirmPassWarning, setConfirmPassWarning] = useState(false);
   useEffect(() => {
     let showWarning = false;
     if ((password.length !== 0 || confirmPassword.length !== 0) && password !== confirmPassword)
@@ -34,25 +36,23 @@ export default function SignUp() {
     setConfirmPassWarning(showWarning);
   }, [password, confirmPassword]);
 
+  useEffect(() => setShowError(""), [username, email, password, confirmPassword]);
 
-  const backendBaseURL = import.meta.env.VITE_BACKEND_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
 
-    let res = await fetch(`${backendBaseURL}/auth/signup.php`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/signup.php`, {
       method: "POST",
-      body: formData,
+      body: new FormData(e.target),
       credentials: "include"
     });
-
     const data = await res.json();
 
     if (!res.ok) {
-      console.log(data.error);
+      setShowError(data.error);
       return;
     }
-    console.log(data.message);
+    
   };
 
 
@@ -70,10 +70,14 @@ export default function SignUp() {
                        showWarning={passWarning} warningMessage="Password must have at least 8 characters, 1 digit, and 1 upper-case letter." />
         <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
                        showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
-        <div className="w-4/5 flex flex-col mt-6">
+
+        <div className="w-full flex flex-col">
+          <div className={`w-full bg-red-700 text-xs text-white text-center px-8 py-1 rounded-md ${showError ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
+            {showError}
+          </div>
           <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
-                 className="w-full text-white bg-indigo-600 mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
-          <span className="w-full text-center text-sm">
+                 className="w-4/5 text-white bg-indigo-600 mx-auto my-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+          <span className="w-4/5 mx-auto text-center text-sm">
             Already have an account? {" "}
             <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
               Login
