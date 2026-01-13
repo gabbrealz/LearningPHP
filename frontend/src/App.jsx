@@ -10,17 +10,18 @@ import './assets/styles.css';
 
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [notifStack, setNotifStack] = useState([]);
   const addToNotifs = (notif) => setNotifStack([...notifStack, {...notif, id: crypto.randomUUID()}]);
 
   return (
     <BrowserRouter>
-      <Header/>
+      <Header isAuthenticated={isAuthenticated} />
       <Notifications notifStack={notifStack} setNotifStack={setNotifStack} />
 
       <Routes>
         <Route path="/" element={<Landing/>} />
-        <Route path="/login" element={<Login addToNotifs={addToNotifs} />} />
+        <Route path="/login" element={<Login addToNotifs={addToNotifs} setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} />} />
       </Routes>
 

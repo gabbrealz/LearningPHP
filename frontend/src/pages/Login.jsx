@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FormInput, PasswordInput } from "../components/FormInput";
 
-export default function Login({ addToNotifs }) {
+export default function Login({ addToNotifs, setIsAuthenticated }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,6 +25,7 @@ export default function Login({ addToNotifs }) {
       return;
     }
 
+    setIsAuthenticated(true);
     addToNotifs({
       bgcolor: "bg-green-700",
       message: data.message
