@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { FormInput, PasswordInput } from "../components/FormInput.jsx";
 
 const usernamePattern = /^[A-Za-z0-9_]+$/;
@@ -50,8 +51,16 @@ export default function SignUp() {
                        showWarning={passWarning} warningMessage="Password must have at least 8 characters, 1 digit, and 1 upper-case letter." />
         <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
                        showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
-        <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
-               className="w-4/5 text-white bg-indigo-600 mt-6 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+        <div className="w-4/5 flex flex-col mt-6">
+          <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
+                 className="w-full text-white bg-indigo-600 mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+          <span className="w-full text-center text-sm">
+            Already have an account? {" "}
+            <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
+              Login
+            </Link>
+          </span>
+        </div>
       </form>
     </section>
   );
