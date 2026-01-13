@@ -11,7 +11,7 @@ import './assets/styles.css';
 
 export default function App() {
   const [notifStack, setNotifStack] = useState([]);
-  const addToNotifs = (notif) => setNotifStack([...notifStack, notif]);
+  const addToNotifs = (notif) => setNotifStack([...notifStack, {...notif, id: crypto.randomUUID()}]);
 
   return (
     <BrowserRouter>

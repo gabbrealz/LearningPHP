@@ -14,7 +14,6 @@ export default function SignUp({ addToNotifs }) {
   const [passWarning, setPassWarning] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPassWarning, setConfirmPassWarning] = useState(false);
-  const [showError, setShowError] = useState("");
 
   useEffect(() => setNameWarning(username.length > 0 && !usernamePattern.test(username)), [username]);
 
@@ -49,10 +48,17 @@ export default function SignUp({ addToNotifs }) {
     const data = await res.json();
 
     if (!res.ok) {
-      setShowError(data.error);
+      addToNotifs({
+        bgcolor: "bg-red-700",
+        message: data.error
+      });
       return;
     }
     
+    addToNotifs({
+      bgcolor: "bg-green-600",
+      message: data.message
+    });
   };
 
 
@@ -71,13 +77,10 @@ export default function SignUp({ addToNotifs }) {
         <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
                        showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
 
-        <div className="w-full flex flex-col">
-          <div className={`w-full bg-red-700 text-xs text-white text-center px-8 py-1 rounded-md ${showError ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
-            {showError}
-          </div>
+        <div className="w-4/5 flex flex-col mt-6">
           <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
-                 className="w-4/5 text-white bg-indigo-600 mx-auto my-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
-          <span className="w-4/5 mx-auto text-center text-sm">
+                 className="w-full text-white bg-indigo-600 mx-auto mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+          <span className="w-full mx-auto text-center text-sm">
             Already have an account? {" "}
             <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
               Login

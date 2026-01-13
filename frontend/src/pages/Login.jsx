@@ -18,10 +18,17 @@ export default function Login({ addToNotifs }) {
     const data = await res.json();
 
     if (!res.ok) {
-      console.log(data.error);
+      addToNotifs({
+        bgcolor: "bg-red-700",
+        message: data.error
+      });
       return;
     }
-    console.log(data.message);
+
+    addToNotifs({
+      bgcolor: "bg-green-600",
+      message: data.message
+    });
   };
 
   return (
