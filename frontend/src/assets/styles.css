@@ -1,6 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
+@theme {
+  --animate-entry-opacity: entryOpacity 0.5s ease-in-out backwards;
+  --animate-entry-slideup: entrySlideUp 0.5s cubic-bezier(.19,.55,.11,.93) backwards;
+  --animate-entry-slidedown: entrySlideDown 0.5s cubic-bezier(.19,.55,.11,.93) backwards;
+  --animate-entry-slideleft: entrySlideLeft 0.5s cubic-bezier(.19,.55,.11,.93) backwards;
+  --animate-entry-slideright: entrySlideRight 0.5s cubic-bezier(.19,.55,.11,.93) backwards;
+
+  @keyframes entryOpacity {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes entrySlideUp {
+    from { opacity: 0; transform: translateY(1.25rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes entrySlideDown {
+    from { opacity: 0; transform: translateY(-1.25rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes entrySlideLeft {
+    from { opacity: 0; transform: translateX(1.25rem); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes entrySlideRight {
+    from { opacity: 0; transform: translateX(-1.25rem); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+}
+
 @layer base {
   * {
     font-family: "Inter", sans-serif;

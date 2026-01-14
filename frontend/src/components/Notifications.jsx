@@ -17,12 +17,11 @@ function Notification({ notif, index, notifStack, setNotifStack }) {
 
   return (
     <div className={`
-      w-1/2 p-2.5 fixed top-4 left-1/2 -translate-x-1/2 text-sm text-white rounded-full shadow-xs shadow-black transition
+      w-1/2 p-2.5 fixed top-4 left-1/2 -translate-x-1/2 text-sm text-white rounded-full shadow-xs shadow-black transition animate-entry-slidedown
       ${notif.bgcolor}
     `} style={{
       transform: `translateY(${index*6}px) scaleX(${1 - index*0.05})`,
-      zIndex: 200-index,
-      filter: `brightness(${1 - index*0.2})`
+      zIndex: 200-index
     }}>
       <div className="text-center">
         {notif.message}
