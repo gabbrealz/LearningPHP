@@ -59,9 +59,10 @@ There is more content coming soon, but for now there is only auth.
 
 ### Option B: Running frontend with Vite's development server
 
-1. Starting from the `016_LearningPHP` working directory, run the development server
+1. Starting from the `016_LearningPHP` working directory, run the following:
     ```terminal
     cd frontend
+    npm install
     npm run dev
     ```
 
