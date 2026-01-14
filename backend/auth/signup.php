@@ -46,8 +46,15 @@ $user_data_dir = dirname($user_data_file);
 if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
 if (file_exists($user_data_file)) {
-    $data = json_decode(file_get_contents($user_data_file), true);
-    $data["id_index"] += 1;
+    try {
+        $data = json_decode(file_get_contents($user_data_file), true);
+        if (!(is_array($data) && array_key_exists("id_index", $data) && is_int($data["id_index"]) && array_key_exists("users", $data) && is_array($data["users"]))) {
+            throw new Exception("User data file has been tampered with");
+        }
+
+        $data["id_index"] += 1;
+    }
+    catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
 }
 else $data = ["id_index" => 1, "users" => []];
 
