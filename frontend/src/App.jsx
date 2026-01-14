@@ -40,7 +40,7 @@ export default function App() {
       <ModalDialog data={modalData} />
 
       <Routes>
-        <Route path="/" element={<Landing/>} />
+        <Route path="/" element={<Landing authenticatedUser={authenticatedUser} />} />
         <Route path="/login" element={<Login addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />} />
         <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} />} />
       </Routes>

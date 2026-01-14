@@ -41,7 +41,7 @@ export default function Header({ addToNotifs, setModalData, authenticatedUser, s
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full py-4 bg-gray-900 px-4 sm:px-12 md:px-20 lg:px-28 xl:px-36">
+    <header className="z-100 fixed top-0 left-0 w-full py-4 bg-black px-4 sm:px-12 md:px-20 lg:px-28 xl:px-36">
       <nav className="w-full flex">
         <Link to="/" className="text-xl text-white px-2 py-1 flex items-center rounded-lg hover:text-slate-400 transition-[color]">
           GABBREALZ

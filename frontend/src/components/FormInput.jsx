@@ -10,7 +10,7 @@ export function FormInput({ formName, inputName, label, type, value, setValue, w
              className={`bg-white text-sm border border-gray-500 p-2 ${showWarning ? "rounded-t-md" : "rounded-md"}`} required/>
       { 
         warningMessage === undefined ? null :
-        <div className={`bg-red-700 text-xs text-white text-center px-8 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
+        <div className={`bg-red-700 text-xs text-white text-center px-4 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
           {warningMessage}
         </div>
       }
@@ -35,7 +35,7 @@ export function PasswordInput({ formName, inputName, label, value, setValue, war
       </span>
       {
         warningMessage === undefined ? null :
-        <div className={`bg-red-700 text-xs text-white text-center px-8 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
+        <div className={`bg-red-700 text-xs text-white text-center px-4 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
           {warningMessage}
         </div>
       }

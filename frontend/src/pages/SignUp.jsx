@@ -73,31 +73,33 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
   }, [authenticatedUser]);
 
   return (
-    <section className="w-full h-screen px-4 flex justify-center items-center">
-      <form onSubmit={handleSubmit} className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-2">
-        <h2 className="text-xl mb-4">
-          SIGN UP
-        </h2>
-        <FormInput formName="signup" inputName="username" label="Username" type="text" value={username} setValue={setUsername}
-                   showWarning={nameWarning} warningMessage="Username cannot contain symbols." />
-        <FormInput formName="signup" inputName="email" label="Email" type="email" value={email} setValue={setEmail}
-                   showWarning={emailWarning} warningMessage="Email is invalid." />
-        <PasswordInput formName="signup" inputName="password" label="Password" value={password} setValue={setPassword}
-                       showWarning={passWarning} warningMessage="Password must have at least 8 characters, 1 digit, and 1 upper-case letter." />
-        <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
-                       showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
+    <section className="w-full h-screen bg-[url(../assets/background/auth-bg.svg)] bg-cover bg-center">
+      <div className="size-full px-4 bg-black/20 flex justify-center items-center">
+        <form onSubmit={handleSubmit} className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-2">
+          <h2 className="text-xl mb-4 tracking-widest">
+            SIGN UP
+          </h2>
+          <FormInput formName="signup" inputName="username" label="Username" type="text" value={username} setValue={setUsername}
+                    showWarning={nameWarning} warningMessage="Username cannot contain symbols." />
+          <FormInput formName="signup" inputName="email" label="Email" type="email" value={email} setValue={setEmail}
+                    showWarning={emailWarning} warningMessage="Email is invalid." />
+          <PasswordInput formName="signup" inputName="password" label="Password" value={password} setValue={setPassword}
+                        showWarning={passWarning} warningMessage="Password must have at least 8 characters, 1 digit, and 1 upper-case letter." />
+          <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
+                        showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
 
-        <div className="w-4/5 flex flex-col mt-6">
-          <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
-                 className="w-full text-white bg-indigo-600 mx-auto mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
-          <span className="w-full mx-auto text-center text-sm">
-            Already have an account? {" "}
-            <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
-              Login
-            </Link>
-          </span>
-        </div>
-      </form>
+          <div className="w-4/5 flex flex-col mt-6">
+            <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
+                  className="w-full text-white bg-indigo-600 mx-auto mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+            <span className="w-full mx-auto text-center text-sm">
+              Already have an account? {" "}
+              <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
+                Login
+              </Link>
+            </span>
+          </div>
+        </form>
+      </div>
     </section>
   );
 }

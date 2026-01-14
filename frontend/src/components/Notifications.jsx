@@ -17,8 +17,7 @@ function Notification({ notif, index, notifStack, setNotifStack }) {
 
   return (
     <div className={`
-      w-1/2 fixed top-4 left-1/2 -translate-x-1/2 rounded-full
-      p-2.5 text-sm text-white transition
+      w-1/2 p-2.5 fixed top-4 left-1/2 -translate-x-1/2 text-sm text-white rounded-full shadow-xs shadow-black transition
       ${notif.bgcolor}
     `} style={{
       transform: `translateY(${index*6}px) scaleX(${1 - index*0.05})`,
