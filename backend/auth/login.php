@@ -14,16 +14,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $user_data_file = "../data/users.json";
+$user_data_dir = dirname($user_data_file);
 http_response_code(422);
 
-$user_data_dir = dirname($user_data_file);
-if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
+try {
+    if (!is_dir($user_data_dir) || !file_exists($user_data_file))
+        throw new Exception();
+    
+    $data = json_decode(file_get_contents($user_data_file), true);
 
-if (file_exists($user_data_file)) {
-    try { $data = json_decode(file_get_contents($user_data_file), true); }
-    catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
+    if (!(is_array($data) && array_key_exists("id_index", $data) && is_int($data["id_index"]) && array_key_exists("users", $data) && is_array($data["users"])))
+        throw new Exception();
 }
-else {
+catch (Exception $e) {
     echo json_encode(["error" => "User does not exist."]);
     exit;
 }
@@ -44,4 +47,4 @@ foreach ($data["users"] as $user) {
     }
 }
 
-echo json_encode(["error" => "Incorrect username or password."]);
+echo json_encode(["error" => "Incorrect $username_or_email or password."]);
