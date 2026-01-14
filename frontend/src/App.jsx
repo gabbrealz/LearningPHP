@@ -12,7 +12,7 @@ import './assets/styles.css';
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [notifStack, setNotifStack] = useState([]);
-  const addToNotifs = (notif) => setNotifStack([...notifStack, {...notif, id: crypto.randomUUID()}]);
+  const addToNotifs = (notif) => setNotifStack([{...notif, id: crypto.randomUUID()}, ...notifStack]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/user.php`, {
