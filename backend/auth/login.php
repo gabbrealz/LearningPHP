@@ -16,8 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $email_pattern = "/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/";
 
 $password_hash = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 12]);
-$user_data_file = "user-data.json";
+$user_data_file = "../data/users.json";
 http_response_code(422);
+
+$user_data_dir = dirname($user_data_file);
+if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
 if (file_exists($user_data_file))
     $data = json_decode(file_get_contents($user_data_file), true);
