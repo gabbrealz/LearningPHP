@@ -36,12 +36,12 @@ export default function Header({ addToNotifs, isAuthenticated, setIsAuthenticate
         <div className="ml-auto w-1/2 flex justify-end items-center gap-2 lg:gap-4">
           {
             isAuthenticated ?
-              <div className="
+              <button className="
                 text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
-                  lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
+                lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
               " onClick={handleLogout}>
                 Logout
-              </div>
+              </button>
               :
               <>
                 <Link to="/login" className="
