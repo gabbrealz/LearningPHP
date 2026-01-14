@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
@@ -33,7 +33,7 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header addToNotifs={addToNotifs} setModalData={setModalData} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />
 
       <Notifications notifStack={notifStack} setNotifStack={setNotifStack} />
@@ -46,6 +46,6 @@ export default function App() {
       </Routes>
 
       <Footer/>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
