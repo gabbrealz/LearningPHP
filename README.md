@@ -62,6 +62,7 @@ There is more content coming soon, but for now there is only auth.
 1. Starting from the `LearningPHP` working directory, run the following:
     ```terminal
     cd frontend
+    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
     npm install
     npm run dev
     ```
