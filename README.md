@@ -33,9 +33,9 @@ There is more content coming soon, but for now there is only auth.
         mklink /J php-backend "full/path/to/LearningPHP/backend"
         ```
 
-## Third, choose which method you want to set up the frontend:
+### Third, choose which method you want to set up the frontend:
 
-### Option A: Running frontend on XAMPP as well
+#### Option A: Running frontend on XAMPP as well
 
 1. Starting from the `LearningPHP` working directory, build the frontend
     ```terminal
@@ -57,7 +57,7 @@ There is more content coming soon, but for now there is only auth.
         mklink /J webprog-activity "full/path/to/LearningPHP/frontend/dist"
         ```
 
-### Option B: Running frontend with Vite's development server
+#### Option B: Running frontend with Vite's development server
 
 1. Starting from the `LearningPHP` working directory, run the following:
     ```terminal
