@@ -30,7 +30,7 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Landing/>} />
-        <Route path="/login" element={<Login addToNotifs={addToNotifs} setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/login" element={<Login addToNotifs={addToNotifs} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} />} />
       </Routes>
 

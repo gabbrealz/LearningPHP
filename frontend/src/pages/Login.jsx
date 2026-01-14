@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { FormInput, PasswordInput } from "../components/FormInput";
 
-export default function Login({ addToNotifs, setIsAuthenticated }) {
+export default function Login({ addToNotifs, isAuthenticated, setIsAuthenticated }) {
+  const navigate = useNavigate();
+  const [redirect, setRedirect] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,13 +26,27 @@ export default function Login({ addToNotifs, setIsAuthenticated }) {
       });
       return;
     }
-
+    
     setIsAuthenticated(true);
     addToNotifs({
       bgcolor: "bg-green-700",
       message: data.message
     });
+    navigate("/");
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      addToNotifs({
+        bgcolor: "bg-red-700",
+        message: "You are already logged in."
+      });
+      setRedirect(true);
+    }
+  }, [isAuthenticated]);
+
+
+  if (redirect) return <Navigate to="/" replace />;
 
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">
