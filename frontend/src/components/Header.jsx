@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 
-export default function Header({ addToNotifs, isAuthenticated, setIsAuthenticated }) {
+export default function Header({ addToNotifs, setModalData, isAuthenticated, setIsAuthenticated }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -11,20 +11,33 @@ export default function Header({ addToNotifs, isAuthenticated, setIsAuthenticate
 
     const data = await res.json();
 
-    if (!res.ok) {
+    if (res.ok) {
+      addToNotifs({
+        bgcolor: "bg-green-700",
+        message: data.message
+      });
+      setIsAuthenticated(false);
+      navigate("/");
+    }
+    else {
       addToNotifs({
         bgcolor: "bg-red-700",
         message: data.error
       });
-      return;
     }
+    setModalData({ show: false });
+  };
 
-    addToNotifs({
-      bgcolor: "bg-green-700",
-      message: data.message
+  const clickLogoutButton = () => {
+    setModalData({
+      show: true,
+      title: "Logout",
+      caption: "Are you sure you want to log out?",
+      buttons: [
+        { content: "Yes", onClick: handleLogout },
+        { content: "No", onClick: () => setModalData({ show: false }) }
+      ]
     });
-    setIsAuthenticated(false);
-    navigate("/");
   };
 
   return (
@@ -39,7 +52,7 @@ export default function Header({ addToNotifs, isAuthenticated, setIsAuthenticate
               <button className="
                 text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
                 lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
-              " onClick={handleLogout}>
+              " onClick={clickLogoutButton}>
                 Logout
               </button>
               :
