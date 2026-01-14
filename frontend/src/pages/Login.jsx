@@ -48,7 +48,7 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
   }, [authenticatedUser]);
 
   return (
-    <section className="w-full h-screen bg-[url(../assets/background/auth-bg.svg)] bg-cover bg-center">
+    <section className="w-full h-screen bg-[url(../assets/background/login-bg.svg)] bg-cover bg-center">
       <div className="size-full px-4 bg-black/20 flex justify-center items-center">
         <form onSubmit={handleSubmit} className="bg-gray-100 w-100 border-2 border-gray-400 rounded-xl px-12 py-6 flex flex-col items-center gap-2">
           <h2 className="text-xl mb-4 tracking-widest">
