@@ -17,7 +17,7 @@ if (isset($_SESSION["user_id"])) {
     session_unset();
     session_destroy();
     http_response_code(200);
-    echo json_encode(["message" => "Your user has been logged out."]);
+    echo json_encode(["message" => "User has been logged out."]);
     exit;
 }
 

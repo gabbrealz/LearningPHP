@@ -37,8 +37,8 @@ export default function Header({ addToNotifs, isAuthenticated, setIsAuthenticate
           {
             isAuthenticated ?
               <div className="
-                text-sm text-black px-2 py-1 border rounded-lg border-white bg-white cursor-pointer transition-colors
-                lg:px-4 lg:text-white lg:bg-transparent lg:hover:text-black lg:hover:bg-white
+                text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
+                  lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
               " onClick={handleLogout}>
                 Logout
               </div>
