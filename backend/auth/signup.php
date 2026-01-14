@@ -39,24 +39,23 @@ else if (!preg_match("/\d/", $_POST["password"]) || !preg_match("/[A-Z]/", $_POS
     exit;
 }
 
-$password_hash = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 12]);
 $user_data_file = "../data/users.json";
-
 $user_data_dir = dirname($user_data_file);
+
 if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
-if (file_exists($user_data_file)) {
-    try {
-        $data = json_decode(file_get_contents($user_data_file), true);
-        if (!(is_array($data) && array_key_exists("id_index", $data) && is_int($data["id_index"]) && array_key_exists("users", $data) && is_array($data["users"]))) {
-            throw new Exception("User data file has been tampered with");
-        }
+try {
+    if (!file_exists($user_data_file))
+        throw new Exception();
 
-        $data["id_index"] += 1;
-    }
-    catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
+    $data = json_decode(file_get_contents($user_data_file), true);
+
+    if (!(is_array($data) && array_key_exists("id_index", $data) && is_int($data["id_index"]) && array_key_exists("users", $data) && is_array($data["users"])))
+        throw new Exception();
+
+    $data["id_index"] += 1;
 }
-else $data = ["id_index" => 1, "users" => []];
+catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
 
 foreach ($data["users"] as $user) {
     if ($user["username"] === $_POST["username"]) {
@@ -68,6 +67,8 @@ foreach ($data["users"] as $user) {
         exit;
     }
 }
+
+$password_hash = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 12]);
 
 array_push($data["users"], [
     "id" => $data["id_index"],
