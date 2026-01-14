@@ -5,9 +5,9 @@ export default function Notifications({ notifStack, setNotifStack }) {
   return (
     <>
       {
-        notifStack.map((notif, index) => (
-          <Notification notif={notif} index={index} notifStack={notifStack} setNotifStack={setNotifStack} />
-        ))
+        notifStack.map((notif, index) => 
+          <Notification key={notif.id} notif={notif} index={index} notifStack={notifStack} setNotifStack={setNotifStack} />
+        )
       }
     </>
   );
@@ -16,10 +16,10 @@ export default function Notifications({ notifStack, setNotifStack }) {
 function Notification({ notif, index, notifStack, setNotifStack }) {
   const closeNotif = () => setNotifStack(notifStack.filter((entry) => entry.id !== notif.id));
 
-  useEffect(() => setTimeout(closeNotif, 7500), []);
+  useEffect(() => { setTimeout(closeNotif, 7500) }, []);
 
   return (
-    <div key={notif.id} className={`
+    <div className={`
       w-1/2 fixed top-4 left-1/2 -translate-x-1/2 rounded-full
       p-2.5 text-sm text-white transition
       ${notif.bgcolor}
