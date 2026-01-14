@@ -25,19 +25,19 @@ There is more content coming soon, but for now there is only auth.
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
-        ln -s "full/path/to/016_LearningPHP/backend" php-backend
+        ln -s "full/path/to/LearningPHP/backend" php-backend
         ```
     - Windows (Run Command Prompt as Administrator)
         ```Command Prompt
         cd "full/path/to/xampp/htdocs"
-        mklink /J php-backend "full/path/to/016_LearningPHP/backend"
+        mklink /J php-backend "full/path/to/LearningPHP/backend"
         ```
 
 ## Third, choose which method you want to set up the frontend:
 
 ### Option A: Running frontend on XAMPP as well
 
-1. Starting from the `016_LearningPHP` working directory, build the frontend
+1. Starting from the `LearningPHP` working directory, build the frontend
     ```terminal
     cd frontend
     echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
@@ -49,17 +49,17 @@ There is more content coming soon, but for now there is only auth.
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
-        ln -s "full/path/to/016_LearningPHP/frontend/dist" webprog-activity
+        ln -s "full/path/to/LearningPHP/frontend/dist" webprog-activity
         ```
     - Windows (Run Command Prompt as Administrator)
         ```Command Prompt
         cd "full/path/to/xampp/htdocs"
-        mklink /J webprog-activity "full/path/to/016_LearningPHP/frontend/dist"
+        mklink /J webprog-activity "full/path/to/LearningPHP/frontend/dist"
         ```
 
 ### Option B: Running frontend with Vite's development server
 
-1. Starting from the `016_LearningPHP` working directory, run the following:
+1. Starting from the `LearningPHP` working directory, run the following:
     ```terminal
     cd frontend
     npm install
