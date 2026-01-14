@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormInput, PasswordInput } from "../components/FormInput.jsx";
 
 const usernamePattern = /^[A-Za-z0-9_]+$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-export default function SignUp({ addToNotifs }) {
+export default function SignUp({ addToNotifs, isAuthenticated }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
   const [email, setEmail] = useState("");
@@ -46,20 +47,30 @@ export default function SignUp({ addToNotifs }) {
     });
     const data = await res.json();
 
-    if (!res.ok) {
+    if (res.ok) {
+      addToNotifs({
+        bgcolor: "bg-green-700",
+        message: data.message
+      });
+      navigate("/login");
+    }
+    else {
       addToNotifs({
         bgcolor: "bg-red-700",
         message: data.error
       });
-      return;
     }
-    
-    addToNotifs({
-      bgcolor: "bg-green-700",
-      message: data.message
-    });
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      addToNotifs({
+        bgcolor: "bg-red-700",
+        message: "You are already logged in."
+      });
+      navigate("/");
+    }
+  }, [isAuthenticated]);
 
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">
