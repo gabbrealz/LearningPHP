@@ -14,7 +14,11 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [notifStack, setNotifStack] = useState([]);
   const [modalData, setModalData] = useState({ show: false });
-  const addToNotifs = (notif) => setNotifStack([{...notif, id: crypto.randomUUID()}, ...notifStack]);
+  const addToNotifs = (notif) => {
+    let newNotifStack = [{...notif, id: crypto.randomUUID()}, ...notifStack];
+    newNotifStack.splice(5);
+    setNotifStack(newNotifStack);
+  };
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/user.php`, {
