@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Header isAuthenticated={isAuthenticated} />
+      <Header addToNotifs={addToNotifs} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
       <Notifications notifStack={notifStack} setNotifStack={setNotifStack} />
 
       <Routes>

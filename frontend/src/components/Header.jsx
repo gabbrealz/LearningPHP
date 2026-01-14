@@ -1,6 +1,32 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
-export default function Header({ isAuthenticated }) {
+export default function Header({ addToNotifs, isAuthenticated, setIsAuthenticated }) {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    let res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/logout.php`, {
+      method: "POST",
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      addToNotifs({
+        bgcolor: "bg-red-700",
+        message: data.error
+      });
+      return;
+    }
+
+    addToNotifs({
+      bgcolor: "bg-green-700",
+      message: data.message
+    });
+    setIsAuthenticated(false);
+    navigate("/");
+  };
+
   return (
     <header className="fixed top-0 left-0 w-full py-4 bg-gray-900 px-4 sm:px-12 md:px-20 lg:px-28 xl:px-36">
       <nav className="w-full flex">
@@ -13,7 +39,7 @@ export default function Header({ isAuthenticated }) {
               <div className="
                 text-sm text-black px-2 py-1 border rounded-lg border-white bg-white cursor-pointer transition-colors
                 lg:px-4 lg:text-white lg:bg-transparent lg:hover:text-black lg:hover:bg-white
-              ">
+              " onClick={handleLogout}>
                 Logout
               </div>
               :
