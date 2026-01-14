@@ -20,7 +20,8 @@ export default function App() {
       credentials: "include"
     })
     .then(res => res.json())
-    .then(data => setIsAuthenticated(data));
+    .then(data => setIsAuthenticated(data))
+    .catch(error => console.log(error));
   }, []);
 
   return (
