@@ -11,7 +11,7 @@ import './assets/styles.css';
 
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authenticatedUser, setAuthenticatedUser] = useState("");
   const [notifStack, setNotifStack] = useState([]);
   const [modalData, setModalData] = useState({ show: false });
   const addToNotifs = (notif) => {
@@ -21,26 +21,28 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/user.php`, {
+    fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/get-authenticated-user.php`, {
       method: "GET",
       credentials: "include"
     })
     .then(res => res.json())
-    .then(data => setIsAuthenticated(data))
+    .then(data => {
+      if (data.authenticated) setAuthenticatedUser(data.username);
+    })
     .catch(error => console.log(error));
   }, []);
 
   return (
     <BrowserRouter>
-      <Header addToNotifs={addToNotifs} setModalData={setModalData} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+      <Header addToNotifs={addToNotifs} setModalData={setModalData} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />
 
       <Notifications notifStack={notifStack} setNotifStack={setNotifStack} />
       <ModalDialog data={modalData} />
 
       <Routes>
         <Route path="/" element={<Landing/>} />
-        <Route path="/login" element={<Login addToNotifs={addToNotifs} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} isAuthenticated={isAuthenticated} />} />
+        <Route path="/login" element={<Login addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />} />
+        <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} />} />
       </Routes>
 
       <Footer/>

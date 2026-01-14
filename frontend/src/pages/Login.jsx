@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FormInput, PasswordInput } from "../components/FormInput";
 
-export default function Login({ addToNotifs, isAuthenticated, setIsAuthenticated }) {
+export default function Login({ addToNotifs, authenticatedUser, setAuthenticatedUser }) {
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
   const [name, setName] = useState("");
@@ -27,7 +27,7 @@ export default function Login({ addToNotifs, isAuthenticated, setIsAuthenticated
       return;
     }
     
-    setIsAuthenticated(true);
+    setAuthenticatedUser(data.username);
     addToNotifs({
       bgcolor: "bg-green-700",
       message: data.message
@@ -38,14 +38,14 @@ export default function Login({ addToNotifs, isAuthenticated, setIsAuthenticated
 
   useEffect(() => {
     if (authChecked) setAuthChecked(false);
-    else if (isAuthenticated) {
+    else if (authenticatedUser) {
       addToNotifs({
         bgcolor: "bg-red-700",
         message: "You are already logged in."
       });
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [authenticatedUser]);
 
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">

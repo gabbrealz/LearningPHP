@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 
-export default function Header({ addToNotifs, setModalData, isAuthenticated, setIsAuthenticated }) {
+export default function Header({ addToNotifs, setModalData, authenticatedUser, setAuthenticatedUser }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -16,7 +16,7 @@ export default function Header({ addToNotifs, setModalData, isAuthenticated, set
         bgcolor: "bg-green-700",
         message: data.message
       });
-      setIsAuthenticated(false);
+      setAuthenticatedUser("");
       navigate("/");
     }
     else {
@@ -48,7 +48,7 @@ export default function Header({ addToNotifs, setModalData, isAuthenticated, set
         </Link>
         <div className="ml-auto w-1/2 flex justify-end items-center gap-2 lg:gap-4">
           {
-            isAuthenticated ?
+            authenticatedUser ?
               <button className="
                 text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
                 lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700

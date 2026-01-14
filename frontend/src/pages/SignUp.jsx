@@ -5,7 +5,7 @@ import { FormInput, PasswordInput } from "../components/FormInput.jsx";
 const usernamePattern = /^[A-Za-z0-9_]+$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-export default function SignUp({ addToNotifs, isAuthenticated }) {
+export default function SignUp({ addToNotifs, authenticatedUser }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
@@ -63,14 +63,14 @@ export default function SignUp({ addToNotifs, isAuthenticated }) {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (authenticatedUser) {
       addToNotifs({
         bgcolor: "bg-red-700",
         message: "You are already logged in."
       });
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [authenticatedUser]);
 
   return (
     <section className="w-full h-screen px-4 flex justify-center items-center">
