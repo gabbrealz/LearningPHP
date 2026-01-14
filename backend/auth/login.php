@@ -35,8 +35,9 @@ foreach ($data["users"] as $user) {
     if ($_POST["username-or-email"] === $user[$username_or_email]) {
         if (password_verify($_POST["password"], $user["password"])) {
             $_SESSION["user_id"] = $user["id"];
+            $_SESSION["user_name"] = $user["username"];
             http_response_code(200);
-            echo json_encode(["message" => "Successfully logged in!"]);
+            echo json_encode(["username" => $user["username"], "message" => "Successfully logged in!"]);
             exit;   
         }
         break;

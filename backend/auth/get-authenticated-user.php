@@ -14,4 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 http_response_code(200);
-echo json_encode(isset($_SESSION["user_id"]));
+
+if (isset($_SESSION["user_id"]))
+    echo json_encode(["authenticated" => true, "username" => $_SESSION["user_name"]]);
+else
+    echo json_encode(["authenticated" => false]);
