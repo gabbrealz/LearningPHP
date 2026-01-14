@@ -6,7 +6,6 @@ import ModalDialog from './components/ModalDialog.jsx';
 import Landing from './pages/Landing.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
-import Footer from './components/Footer.jsx';
 import './assets/styles.css';
 
 
@@ -44,8 +43,6 @@ export default function App() {
         <Route path="/login" element={<Login addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />} />
         <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} />} />
       </Routes>
-
-      <Footer/>
     </HashRouter>
   )
 }
