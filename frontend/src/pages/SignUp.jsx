@@ -90,7 +90,7 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
             SIGN UP
           </h2>
           <FormInput inputName="username" label="Username" type="text" value={username} setValue={setUsername}
-                    showWarning={nameWarning} warningMessage="Username cannot contain symbols." />
+                    showWarning={nameWarning} warningMessage="Username cannot have symbols or spaces." />
           <FormInput inputName="email" label="Email" type="email" value={email} setValue={setEmail}
                     showWarning={emailWarning} warningMessage="Email is invalid." />
           <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword}
