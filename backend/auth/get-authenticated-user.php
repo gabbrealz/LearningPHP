@@ -30,24 +30,24 @@ if (count($_COOKIE) > 0) {
             : [];
 
         if (isset($rememberme_data[$cookie_key])) {
-            $user_rememberme = $rememberme_data[$cookie_key];
+            $user_id = $rememberme_data[$cookie_key]["user_id"];
 
             $user_data_file = "../data/users.json";
             $user_data = file_exists($user_data_file) ?
-                json_decode(file_get_contents($user_data_file), true) ?? []
-                : [];
+                json_decode(file_get_contents($user_data_file), true) ?? ["users" => []]
+                : ["users" => []];
             $users = $user_data["users"];
 
-            if (isset($users[$user_rememberme["user_id"]])) {
-                $_SESSION["user_id"] = $user_rememberme["user_id"];
-                $_SESSION["user_name"] = $users[$user_rememberme["user_id"]]["user_name"];
+            if (isset($users[$user_id])) {
+                $_SESSION["user_id"] = $user_id;
+                $_SESSION["user_name"] = $users[$user_id]["username"];
 
                 echo json_encode(["authenticated" => true, "username" => $_SESSION["user_name"]]);
                 exit;
             }
         }
         else {
-            setcookie("LEARNINGPHP_REMEMBER_ME", $cookie_key, time() - 3600, "/");
+            setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $cookie_key, time() - 3600, "/");
             // Put code here that erases the cookie in json   
         }
     }
