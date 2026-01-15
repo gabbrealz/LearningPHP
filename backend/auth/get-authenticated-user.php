@@ -20,36 +20,34 @@ if (isset($_SESSION["user_id"])) {
     exit;
 }
 
-if (count($_COOKIE) > 0) {
-    if (isset($_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"])) {
-        $cookie_key = $_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"];
+if (isset($_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"])) {
+    $cookie_key = $_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"];
 
-        $rememberme_data_file = "../data/remember-me.json";
-        $rememberme_data = file_exists($rememberme_data_file) ?
-            json_decode(file_get_contents($rememberme_data_file), true) ?? []
-            : [];
+    $rememberme_data_file = "../data/remember-me.json";
+    $rememberme_data = file_exists($rememberme_data_file) ?
+        json_decode(file_get_contents($rememberme_data_file), true) ?? []
+        : [];
 
-        if (isset($rememberme_data[$cookie_key])) {
-            $user_id = $rememberme_data[$cookie_key]["user_id"];
+    if (isset($rememberme_data[$cookie_key])) {
+        $user_id = $rememberme_data[$cookie_key]["user_id"];
 
-            $user_data_file = "../data/users.json";
-            $user_data = file_exists($user_data_file) ?
-                json_decode(file_get_contents($user_data_file), true) ?? ["users" => []]
-                : ["users" => []];
-            $users = $user_data["users"];
+        $user_data_file = "../data/users.json";
+        $user_data = file_exists($user_data_file) ?
+            json_decode(file_get_contents($user_data_file), true) ?? ["users" => []]
+            : ["users" => []];
+        $users = $user_data["users"];
 
-            if (isset($users[$user_id])) {
-                $_SESSION["user_id"] = $user_id;
-                $_SESSION["user_name"] = $users[$user_id]["username"];
+        if (isset($users[$user_id])) {
+            $_SESSION["user_id"] = $user_id;
+            $_SESSION["user_name"] = $users[$user_id]["username"];
 
-                echo json_encode(["authenticated" => true, "username" => $_SESSION["user_name"]]);
-                exit;
-            }
+            echo json_encode(["authenticated" => true, "username" => $_SESSION["user_name"]]);
+            exit;
         }
-        else {
-            setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $cookie_key, time() - 3600, "/");
-            // Put code here that erases the cookie in json   
-        }
+    }
+    else {
+        setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $cookie_key, time() - 3600, "/");
+        // Put code here that erases the cookie in json   
     }
 }
 
