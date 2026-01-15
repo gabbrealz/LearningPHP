@@ -18,9 +18,6 @@ $user_data_dir = dirname($user_data_file);
 http_response_code(422);
 
 try {
-    if (!is_dir($user_data_dir) || !file_exists($user_data_file))
-        throw new Exception();
-    
     $data = json_decode(file_get_contents($user_data_file), true);
 
     if (!(is_array($data) && array_key_exists("id_index", $data) && is_int($data["id_index"]) && array_key_exists("users", $data) && is_array($data["users"])))
