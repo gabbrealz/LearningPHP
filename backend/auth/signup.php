@@ -44,10 +44,6 @@ if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
 try {
     $data = json_decode(file_get_contents($user_data_file), true);
-
-    if (!(is_array($data) && array_key_exists("id_index", $data) && is_int($data["id_index"]) && array_key_exists("users", $data) && is_array($data["users"])))
-        throw new Exception();
-
     $data["id_index"] += 1;
 }
 catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
