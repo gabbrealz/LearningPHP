@@ -22,11 +22,11 @@ export default function Landing({ authenticatedUser }) {
               <span className="text-4xl text-center leading-normal">
                 You're not logged in right now.<br/>
                 Kindly {" "}
-                <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
+                <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-500 transition-[color]">
                   Login
                 </Link>
                 {" "} or {" "}
-                <Link to="/sign-up" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
+                <Link to="/sign-up" className="whitespace-nowrap text-blue-900 hover:text-blue-500 transition-[color]">
                   Sign up
                 </Link>!
               </span>
