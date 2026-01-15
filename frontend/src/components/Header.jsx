@@ -4,28 +4,38 @@ export default function Header({ addToNotifs, setModalData, authenticatedUser, s
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    let res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/logout.php`, {
-      method: "POST",
-      credentials: "include"
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      addToNotifs({
-        bgcolor: "bg-green-700",
-        message: data.message
+    try {
+      let res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/logout.php`, {
+        method: "POST",
+        credentials: "include"
       });
-      setAuthenticatedUser("");
-      navigate("/");
+  
+      const data = await res.json();
+  
+      if (res.ok) {
+        addToNotifs({
+          bgcolor: "bg-green-700",
+          message: data.message
+        });
+        setAuthenticatedUser("");
+        navigate("/");
+      }
+      else {
+        addToNotifs({
+          bgcolor: "bg-red-700",
+          message: data.error
+        });
+      }
+      setModalData({ show: false });
     }
-    else {
+    catch (error) {
       addToNotifs({
         bgcolor: "bg-red-700",
-        message: data.error
+        message: "Sorry! We can't process your request right now."
       });
+      console.error(error);
+      return;
     }
-    setModalData({ show: false });
   };
 
   const clickLogoutButton = () => {

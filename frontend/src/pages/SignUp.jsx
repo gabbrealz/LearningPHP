@@ -40,25 +40,35 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/signup.php`, {
-      method: "POST",
-      body: new FormData(e.target),
-      credentials: "include"
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      addToNotifs({
-        bgcolor: "bg-green-700",
-        message: data.message
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/signup.php`, {
+        method: "POST",
+        body: new FormData(e.target),
+        credentials: "include"
       });
-      navigate("/login");
+      const data = await res.json();
+  
+      if (res.ok) {
+        addToNotifs({
+          bgcolor: "bg-green-700",
+          message: data.message
+        });
+        navigate("/login");
+      }
+      else {
+        addToNotifs({
+          bgcolor: "bg-red-700",
+          message: data.error
+        });
+      }
     }
-    else {
+    catch (error) {
       addToNotifs({
         bgcolor: "bg-red-700",
-        message: data.error
+        message: "Sorry! We can't process your request right now."
       });
+      console.error(error);
+      return;
     }
   };
 

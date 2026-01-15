@@ -10,23 +10,36 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    let res;
+    let data;
 
-    let res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/login.php`, {
-      method: "POST",
-      body: new FormData(e.target),
-      credentials: "include"
-    });
+    try {
+      res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/login.php`, {
+        method: "POST",
+        body: new FormData(e.target),
+        credentials: "include"
+      });
 
-    const data = await res.json();
+      data = await res.json();
 
-    if (!res.ok) {
+      if (!res.ok) {
+        addToNotifs({
+          bgcolor: "bg-red-700",
+          message: data.error
+        });
+        return;
+      }
+    }
+    catch (error) {
       addToNotifs({
         bgcolor: "bg-red-700",
-        message: data.error
+        message: "Sorry! We can't process your request right now."
       });
+      console.error(error);
       return;
     }
-    
+
     setAuthenticatedUser(data.username);
     addToNotifs({
       bgcolor: "bg-green-700",
