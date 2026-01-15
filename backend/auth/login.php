@@ -37,18 +37,18 @@ foreach ($data["users"] as $id => $user) {
             $_SESSION["user_id"] = $id;
             $_SESSION["user_name"] = $user["username"];
 
-            if (count($_COOKIE) > 0 && isset($_POST["remember-me"])) {
+            if (isset($_POST["remember-me"])) {
                 $rememberme_data_file = "../data/remember-me.json";
                 $rememberme_data = file_exists($rememberme_data_file) ?
                     json_decode(file_get_contents($rememberme_data_file), true) ?? []
                     : [];
                     
                 $rememberme_cookie_key = generate_uuid_v4();
-                $expiry_duration = 60*60*24*7;
+                $expiry_timestamp = time() + 60*60*24*7;
 
-                setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_duration, "/");
+                setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_timestamp, "/");
 
-                $rememberme_data[$rememberme_cookie_key] = ["user_id" => $user["id"], "expiry_timestamp" => time()+$expiry_duration];
+                $rememberme_data[$rememberme_cookie_key] = ["user_id" => $id, "expiry_timestamp" => $expiry_timestamp];
                 file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
             }
 
