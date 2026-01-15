@@ -4,6 +4,7 @@ import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
 import ModalDialog from './components/ModalDialog.jsx';
 import Landing from './pages/Landing.jsx';
+import Tracker from './pages/Tracker.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
 import './assets/styles.css';
@@ -40,6 +41,7 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Landing authenticatedUser={authenticatedUser} />} />
+        <Route path="/tracker" element={<Tracker />} />
         <Route path="/login" element={<Login addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />} />
         <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} />} />
       </Routes>
