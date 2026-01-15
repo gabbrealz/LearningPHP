@@ -47,29 +47,28 @@ export default function Header({ addToNotifs, setModalData, authenticatedUser, s
           GABBREALZ
         </Link>
         <div className="ml-auto w-1/2 flex justify-end items-center gap-2 lg:gap-4">
-          {
-            authenticatedUser ?
-              <button className="
-                text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
-                lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
-              " onClick={clickLogoutButton}>
-                Logout
-              </button>
-              :
-              <>
-                <Link to="/login" className="
-                  text-sm text-white px-2 py-1 border rounded-lg border-green-700 bg-green-700 transition-colors
-                  lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-green-700 lg:hover:bg-green-700
-                ">
-                  Login
-                </Link>
-                <Link to="/sign-up" className="
-                  text-sm text-white px-2 py-1 border rounded-lg border-indigo-600 bg-indigo-600 transition-colors
-                  lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-indigo-600 lg:hover:bg-indigo-600
-                ">
-                  Sign Up
-                </Link>
-              </>
+          { authenticatedUser ?
+            <button onClick={clickLogoutButton} className="
+              text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
+              lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
+            ">
+              Logout
+            </button>
+            :
+            <>
+              <Link to="/login" className="
+                text-sm text-white px-2 py-1 border rounded-lg border-green-700 bg-green-700 transition-colors
+                lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-green-700 lg:hover:bg-green-700
+              ">
+                Login
+              </Link>
+              <Link to="/sign-up" className="
+                text-sm text-white px-2 py-1 border rounded-lg border-indigo-600 bg-indigo-600 transition-colors
+                lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-indigo-600 lg:hover:bg-indigo-600
+              ">
+                Sign Up
+              </Link>
+            </>
           }
         </div>
       </nav>
