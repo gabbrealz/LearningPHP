@@ -28,12 +28,9 @@ catch (Exception $e) {
     exit;
 }
 
-$username_or_email = filter_var($_POST["username-or-email"], FILTER_VALIDATE_EMAIL) ? "email" : "username";
-
 foreach ($data["users"] as $id => $user) {
-    if ($_POST["username-or-email"] === $user[$username_or_email]) {
+    if ($_POST["email"] === $user["email"]) {
         if (password_verify($_POST["password"], $user["password"])) {
-
             $_SESSION["user_id"] = $id;
             $_SESSION["user_name"] = $user["username"];
 
@@ -60,7 +57,7 @@ foreach ($data["users"] as $id => $user) {
     }
 }
 
-echo json_encode(["error" => "Incorrect $username_or_email or password."]);
+echo json_encode(["error" => "Incorrect email or password."]);
 
 
 function generate_uuid_v4() {

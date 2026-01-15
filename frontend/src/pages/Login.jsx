@@ -5,7 +5,7 @@ import { FormInput, PasswordInput } from "../components/FormInput";
 export default function Login({ addToNotifs, authenticatedUser, setAuthenticatedUser }) {
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
@@ -67,7 +67,7 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
           <h2 className="text-xl mb-4 tracking-widest">
             LOGIN
           </h2>
-          <FormInput inputName="username-or-email" label="Username / Email" type="text" value={name} setValue={setName} />
+          <FormInput inputName="email" label="Email" type="email" value={email} setValue={setEmail} />
           <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword} />
           <RememberMe />
           <div className="w-4/5 flex flex-col mt-6">
