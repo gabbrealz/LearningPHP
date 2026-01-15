@@ -12,11 +12,16 @@ else if ($_SERVER['REQUEST_METHOD'] !== "POST") {
     http_response_code(405);
     exit;
 }
+else if (isset($_SESSION["user_id"])) {
+    http_response_code(403);
+    echo json_encode(["error" => "You are already logged in."]);
+    exit;
+}
 
-$username_pattern = "/^[A-Za-z0-9_]+$/";
 http_response_code(422);
 
-if (!preg_match($username_pattern, $_POST["username"])) {
+
+if (!preg_match("/^[A-Za-z0-9_]+$/", $_POST["username"])) {
     echo json_encode(["error" => "Username can only have A-Z, 0-9, and underscore."]);
     exit;
 }

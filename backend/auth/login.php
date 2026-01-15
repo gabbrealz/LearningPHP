@@ -12,6 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit;
 }
+else if (isset($_SESSION["user_id"])) {
+    http_response_code(403);
+    echo json_encode(["error" => "You are already logged in."]);
+    exit;
+}
 
 $user_data_file = "../data/users.json";
 $user_data_dir = dirname($user_data_file);
