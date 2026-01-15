@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import CloseIcon from "../assets/interface-icons/cross.svg?react";
 
 export default function Notifications({ notifStack, setNotifStack }) {
@@ -5,15 +6,23 @@ export default function Notifications({ notifStack, setNotifStack }) {
     <>
       {
         notifStack.map((notif, index) => 
-          <Notification key={notif.id} notif={notif} index={index} notifStack={notifStack} setNotifStack={setNotifStack} />
+          <Notification key={notif.id} notif={notif} index={index} setNotifStack={setNotifStack} />
         )
       }
     </>
   );
 }
 
-function Notification({ notif, index, notifStack, setNotifStack }) {
-  const closeNotif = () => setNotifStack(notifStack.filter((entry) => entry.id !== notif.id));
+function Notification({ notif, index, setNotifStack }) {
+  const closeNotif = () => setNotifStack((prev) => prev.filter((entry) => entry.id !== notif.id));
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNotifStack((prev) => prev.filter((entry) => entry.id !== notif.id));
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className={`

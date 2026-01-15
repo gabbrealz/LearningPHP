@@ -15,9 +15,10 @@ export default function App() {
   const [notifStack, setNotifStack] = useState([]);
   const [modalData, setModalData] = useState({ show: false });
   const addToNotifs = (notif) => {
-    let newNotifStack = [{...notif, id: crypto.randomUUID()}, ...notifStack];
-    newNotifStack.splice(5);
-    setNotifStack(newNotifStack);
+    setNotifStack((prev) => {
+      const newStack = [{...notif, id: crypto.randomUUID()}, ...prev];
+      return newStack.splice(0, 5);
+    });
   };
 
   useEffect(() => {
