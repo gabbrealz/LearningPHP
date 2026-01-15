@@ -46,7 +46,7 @@ foreach ($data["users"] as $id => $user) {
                 $rememberme_cookie_key = generate_uuid_v4();
                 $expiry_timestamp = time() + 60*60*24*7;
 
-                setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_timestamp, "/");
+                setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_timestamp, "/", "", false, true);
 
                 $rememberme_data[$rememberme_cookie_key] = ["user_id" => $id, "expiry_timestamp" => $expiry_timestamp];
                 file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
