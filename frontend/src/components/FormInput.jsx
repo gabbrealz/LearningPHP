@@ -12,10 +12,11 @@ export function FormInput({ inputName, label, type, value, setValue, warningMess
       </label>
       <input type={type} id={`${id}`} name={inputName} value={value} onChange={(e) => setValue(e.target.value)}
              className={`bg-white text-sm border border-gray-500 p-2 ${showWarning ? "rounded-t-md" : "rounded-md"}`} required/>
-      { warningMessage === undefined ? null :
-        <div className={`bg-red-700 text-xs text-white text-center px-4 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
-          {warningMessage}
-        </div>
+      {
+        warningMessage === undefined ? null :
+          <div className={`bg-red-700 text-xs text-white text-center px-4 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
+            {warningMessage}
+          </div>
       }
     </div>
   );
@@ -33,16 +34,18 @@ export function PasswordInput({ inputName, label, value, setValue, warningMessag
       <span className="relative">
         <input type={show ? "text" : "password"} id={`${id}`} name={inputName} value={value} onChange={(e) => setValue(e.target.value)}
                className={`w-full bg-white text-sm border border-gray-500 p-2 ${showWarning ? "rounded-t-md" : "rounded-md"}`} required/>
-        { show ?
-          <HidePassIcon className="cursor-pointer absolute size-4.5 top-1/2 right-1 -translate-1/2" onClick={() => setShow(false)} />
-          :
-          <ShowPassIcon className="cursor-pointer absolute size-4.5 top-1/2 right-1 -translate-1/2" onClick={() => setShow(true)} />
+        {
+          show ?
+            <HidePassIcon className="cursor-pointer absolute size-4.5 top-1/2 right-1 -translate-1/2" onClick={() => setShow(false)} />
+            :
+            <ShowPassIcon className="cursor-pointer absolute size-4.5 top-1/2 right-1 -translate-1/2" onClick={() => setShow(true)} />
         }
       </span>
-      { warningMessage === undefined ? null :
-        <div className={`bg-red-700 text-xs text-white text-center px-4 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
-          {warningMessage}
-        </div>
+      {
+        warningMessage === undefined ? null :
+          <div className={`bg-red-700 text-xs text-white text-center px-4 py-1 rounded-b-md ${showWarning ? "" : "h-0 scale-y-0"} transition-[height,scale]`}>
+            {warningMessage}
+          </div>
       }
     </div>
   );
