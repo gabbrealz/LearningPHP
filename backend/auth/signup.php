@@ -49,10 +49,6 @@ $data = file_exists($user_data_file) ?
 $data["id_index"] += 1;
 
 foreach ($data["users"] as $id => $user) {
-    if ($user["username"] === $_POST["username"]) {
-        echo json_encode(["error" => "Username already exists."]);
-        exit;
-    }
     if ($user["email"] === $_POST["email"]) {
         echo json_encode(["error" => "Email is already registered."]);
         exit;
