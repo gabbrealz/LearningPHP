@@ -14,6 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 if (isset($_SESSION["user_id"])) {
+    if (isset($_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"])) {
+        $cookie_key = $_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"];
+        
+        setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $cookie_key, time() - 3600, "/");
+        unset($rememberme_data[$cookie_key]);
+        file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
+    }
+
     session_unset();
     session_destroy();
     http_response_code(200);

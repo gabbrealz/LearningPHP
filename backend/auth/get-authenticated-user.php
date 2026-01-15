@@ -47,7 +47,8 @@ if (isset($_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"])) {
     }
     else {
         setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $cookie_key, time() - 3600, "/");
-        // Put code here that erases the cookie in json   
+        unset($rememberme_data[$cookie_key]);
+        file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
     }
 }
 
