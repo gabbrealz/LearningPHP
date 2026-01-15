@@ -19,7 +19,10 @@ if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
 http_response_code(422);
 
-try { $data = json_decode(file_get_contents($user_data_file), true); }
+try {
+    if (!file_exists($user_data_file)) throw new Exception();
+    $data = json_decode(file_get_contents($user_data_file), true);
+}
 catch (Exception $e) {
     echo json_encode(["error" => "User does not exist."]);
     exit;
