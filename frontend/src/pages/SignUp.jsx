@@ -89,13 +89,13 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
           <h2 className="text-xl mb-4 tracking-widest">
             SIGN UP
           </h2>
-          <FormInput formName="signup" inputName="username" label="Username" type="text" value={username} setValue={setUsername}
+          <FormInput inputName="username" label="Username" type="text" value={username} setValue={setUsername}
                     showWarning={nameWarning} warningMessage="Username cannot contain symbols." />
-          <FormInput formName="signup" inputName="email" label="Email" type="email" value={email} setValue={setEmail}
+          <FormInput inputName="email" label="Email" type="email" value={email} setValue={setEmail}
                     showWarning={emailWarning} warningMessage="Email is invalid." />
-          <PasswordInput formName="signup" inputName="password" label="Password" value={password} setValue={setPassword}
+          <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword}
                         showWarning={passWarning} warningMessage="Password must have at least 8 characters, 1 digit, and 1 upper-case letter." />
-          <PasswordInput formName="signup" inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
+          <PasswordInput inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
                         showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
 
           <div className="w-4/5 flex flex-col mt-6">

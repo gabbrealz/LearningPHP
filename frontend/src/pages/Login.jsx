@@ -67,8 +67,8 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
           <h2 className="text-xl mb-4 tracking-widest">
             LOGIN
           </h2>
-          <FormInput formName="login" inputName="username-or-email" label="Username / Email" type="text" value={name} setValue={setName} />
-          <PasswordInput formName="login" inputName="password" label="Password" value={password} setValue={setPassword} />
+          <FormInput inputName="username-or-email" label="Username / Email" type="text" value={name} setValue={setName} />
+          <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword} />
           <div className="w-4/5 flex flex-col mt-6">
             <input type="submit" id="login-submit" value="Login" className="w-full text-white bg-green-700 mb-2 border py-1.5 rounded-md cursor-pointer hover:bg-green-600 transition-colors" />
             <span className="w-full text-center text-sm">
