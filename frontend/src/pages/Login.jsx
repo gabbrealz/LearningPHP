@@ -23,7 +23,11 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
 
       data = await res.json();
 
-      if (!res.ok) {
+      if (res.status === 403) {
+        location.reload();
+        return;
+      }
+      else if (!res.ok) {
         addToNotifs({
           bgcolor: "bg-red-700",
           message: data.error

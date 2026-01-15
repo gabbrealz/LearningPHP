@@ -55,6 +55,10 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
         });
         navigate("/login");
       }
+      else if (res.status === 403) {
+        location.reload();
+        return;
+      }
       else {
         addToNotifs({
           bgcolor: "bg-red-700",
