@@ -48,7 +48,7 @@ try {
 }
 catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
 
-foreach ($data["users"] as $user) {
+foreach ($data["users"] as $id => $user) {
     if ($user["username"] === $_POST["username"]) {
         echo json_encode(["error" => "Username already exists."]);
         exit;
@@ -61,12 +61,11 @@ foreach ($data["users"] as $user) {
 
 $password_hash = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 12]);
 
-array_push($data["users"], [
-    "id" => $data["id_index"],
+$data["users"][$data["id_index"]] = [
     "username" => $_POST["username"],
-    "email"=> $_POST["email"],
-    "password"=> $password_hash,
-]);
+    "email" => $_POST["email"],
+    "password" => $password_hash
+];
 
 file_put_contents($user_data_file, json_encode($data, JSON_PRETTY_PRINT));
 http_response_code(201);

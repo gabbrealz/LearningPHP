@@ -27,11 +27,11 @@ catch (Exception $e) {
 
 $username_or_email = filter_var($_POST["username-or-email"], FILTER_VALIDATE_EMAIL) ? "email" : "username";
 
-foreach ($data["users"] as $user) {
+foreach ($data["users"] as $id => $user) {
     if ($_POST["username-or-email"] === $user[$username_or_email]) {
         if (password_verify($_POST["password"], $user["password"])) {
 
-            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["user_id"] = $id;
             $_SESSION["user_name"] = $user["username"];
 
             if (count($_COOKIE) > 0 && isset($_POST["remember-me"])) {
