@@ -42,12 +42,11 @@ $user_data_dir = dirname($user_data_file);
 
 if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
-try {
-    if (!file_exists($user_data_file)) throw new Exception();
-    $data = json_decode(file_get_contents($user_data_file), true);
-    $data["id_index"] += 1;
-}
-catch (Exception $e) { $data = ["id_index" => 1, "users" => []]; }
+$data = file_exists($user_data_file) ?
+    json_decode(file_get_contents($user_data_file), true) ?? ["id_index" => 0, "users" => []]
+    : ["id_index" => 0, "users" => []];
+    
+$data["id_index"] += 1;
 
 foreach ($data["users"] as $id => $user) {
     if ($user["username"] === $_POST["username"]) {

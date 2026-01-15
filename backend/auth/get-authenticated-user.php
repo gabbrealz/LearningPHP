@@ -25,15 +25,17 @@ if (count($_COOKIE) > 0) {
         $cookie_key = $_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"];
 
         $rememberme_data_file = "../data/remember-me.json";
-        try { $rememberme_data = json_decode(file_get_contents($rememberme_data_file), true); }
-        catch (Exception $e) { $rememberme_data = []; }
+        $rememberme_data = file_exists($rememberme_data_file) ?
+            json_decode(file_get_contents($rememberme_data_file), true) ?? []
+            : [];
 
         if (isset($rememberme_data[$cookie_key])) {
             $user_rememberme = $rememberme_data[$cookie_key];
 
             $user_data_file = "../data/users.json";
-            try { $user_data = json_decode(file_get_contents($user_data_file), true); }
-            catch (Exception $e) { $user_data = ["users" => []]; }
+            $user_data = file_exists($user_data_file) ?
+                json_decode(file_get_contents($user_data_file), true) ?? []
+                : [];
             $users = $user_data["users"];
 
             if (isset($users[$user_rememberme["user_id"]])) {

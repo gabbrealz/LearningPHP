@@ -39,9 +39,10 @@ foreach ($data["users"] as $id => $user) {
 
             if (count($_COOKIE) > 0 && isset($_POST["remember-me"])) {
                 $rememberme_data_file = "../data/remember-me.json";
-                try { $rememberme_data = json_decode(file_get_contents($rememberme_data_file), true); }
-                catch (Exception $e) { $rememberme_data = []; }
-
+                $rememberme_data = file_exists($rememberme_data_file) ?
+                    json_decode(file_get_contents($rememberme_data_file), true) ?? []
+                    : [];
+                    
                 $rememberme_cookie_key = generate_uuid_v4();
                 $expiry_duration = 60*60*24*7;
 
