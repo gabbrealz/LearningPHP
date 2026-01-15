@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { FormInput, PasswordInput } from "../components/FormInput";
 
 export default function Login({ addToNotifs, authenticatedUser, setAuthenticatedUser }) {
@@ -69,6 +69,7 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
           </h2>
           <FormInput inputName="username-or-email" label="Username / Email" type="text" value={name} setValue={setName} />
           <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword} />
+          <RememberMe />
           <div className="w-4/5 flex flex-col mt-6">
             <input type="submit" id="login-submit" value="Login" className="w-full text-white bg-green-700 mb-2 border py-1.5 rounded-md cursor-pointer hover:bg-green-600 transition-colors" />
             <span className="w-full text-center text-sm">
@@ -82,4 +83,17 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
       </div>
     </section>
   );
+}
+
+function RememberMe() {
+  const id = useId();
+
+  return (
+    <span className="self-start flex items-center">
+      <input type="checkbox" id={id} name="remember-me" value="yes" className="mr-2 size-4" />
+      <label className="text-sm" htmlFor={`${id}`}>
+        Remember Me
+      </label>
+    </span>
+  )
 }
