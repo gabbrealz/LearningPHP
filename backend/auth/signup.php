@@ -14,15 +14,13 @@ else if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 }
 
 $username_pattern = "/^[A-Za-z0-9_]+$/";
-$email_pattern = "/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/";
-
 http_response_code(422);
 
 if (!preg_match($username_pattern, $_POST["username"])) {
     echo json_encode(["error" => "Username can only have A-Z, 0-9, and underscore."]);
     exit;
 }
-else if (!preg_match($email_pattern, $_POST["email"])) {
+else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     echo json_encode(["error" => "Email is invalid."]);
     exit;
 }
