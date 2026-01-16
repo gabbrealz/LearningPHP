@@ -26,39 +26,44 @@ http_response_code(422);
 
 try {
     if (!file_exists($user_data_file)) throw new Exception();
-    $data = json_decode(file_get_contents($user_data_file), true);
+    $user_data = json_decode(file_get_contents($user_data_file), true);
 }
 catch (Exception $e) {
     echo json_encode(["error" => "User does not exist."]);
     exit;
 }
 
-foreach ($data["users"] as $id => $user) {
-    if ($_POST["email"] === $user["email"]) {
-        if (password_verify($_POST["password"], $user["password"])) {
-            $_SESSION["user_id"] = $id;
-            $_SESSION["user_name"] = $user["username"];
+$email_index_file = "../data/email-index.json";
+$email_index_data = file_exists($email_index_file) ?
+    json_decode(file_get_contents($email_index_file), true) ?? []
+    : [];
 
-            if (isset($_POST["remember-me"])) {
-                $rememberme_data_file = "../data/remember-me.json";
-                $rememberme_data = file_exists($rememberme_data_file) ?
-                    json_decode(file_get_contents($rememberme_data_file), true) ?? []
-                    : [];
-                    
-                $rememberme_cookie_key = generate_uuid_v4();
-                $expiry_timestamp = time() + 60*60*24*7;
+if (isset($email_index_data[$_POST["email"]])) {
+    $user_id = $email_index_data[$_POST["email"]];
+    $user = $user_data["users"][$user_id];
 
-                setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_timestamp, "/", "", false, true);
+    if (password_verify($_POST["password"], $user["password"])) {
+        $_SESSION["user_id"] = $user_id;
+        $_SESSION["user_name"] = $user["username"];
 
-                $rememberme_data[$rememberme_cookie_key] = ["user_id" => $id, "expiry_timestamp" => $expiry_timestamp];
-                file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
-            }
+        if (isset($_POST["remember-me"])) {
+            $rememberme_data_file = "../data/remember-me.json";
+            $rememberme_data = file_exists($rememberme_data_file) ?
+                json_decode(file_get_contents($rememberme_data_file), true) ?? []
+                : [];
+                
+            $rememberme_cookie_key = generate_uuid_v4();
+            $expiry_timestamp = time() + 60*60*24*7;
 
-            http_response_code(200);
-            echo json_encode(["username" => $user["username"], "message" => "Successfully logged in!"]);
-            exit;
+            setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_timestamp, "/", "", false, true);
+
+            $rememberme_data[$rememberme_cookie_key] = ["user_id" => $user_id, "expiry_timestamp" => $expiry_timestamp];
+            file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
         }
-        break;
+
+        http_response_code(200);
+        echo json_encode(["username" => $user["username"], "message" => "Successfully logged in!"]);
+        exit;
     }
 }
 

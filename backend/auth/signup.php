@@ -47,13 +47,13 @@ $user_data_dir = dirname($user_data_file);
 
 if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
 
-$data = file_exists($user_data_file) ?
+$user_data = file_exists($user_data_file) ?
     json_decode(file_get_contents($user_data_file), true) ?? ["id_index" => 0, "users" => []]
     : ["id_index" => 0, "users" => []];
     
-$data["id_index"] += 1;
+$user_data["id_index"] += 1;
 
-foreach ($data["users"] as $id => $user) {
+foreach ($user_data["users"] as $id => $user) {
     if ($user["email"] === $_POST["email"]) {
         echo json_encode(["error" => "Email is already registered."]);
         exit;
@@ -62,12 +62,20 @@ foreach ($data["users"] as $id => $user) {
 
 $password_hash = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 12]);
 
-$data["users"][$data["id_index"]] = [
+$user_data["users"][$user_data["id_index"]] = [
     "username" => $_POST["username"],
     "email" => $_POST["email"],
     "password" => $password_hash
 ];
 
-file_put_contents($user_data_file, json_encode($data, JSON_PRETTY_PRINT));
+$email_index_file = "../data/email-index.json";
+$email_index_data = file_exists($email_index_file) ?
+    json_decode(file_get_contents($email_index_file), true) ?? []
+    : [];
+
+$email_index_data[$_POST["email"]] = (string) $user_data["id_index"];
+
+file_put_contents($user_data_file, json_encode($user_data, JSON_PRETTY_PRINT));
+file_put_contents($email_index_file, json_encode($email_index_data, JSON_PRETTY_PRINT));
 http_response_code(201);
 echo json_encode(["message" => "User created successfully!"]);
