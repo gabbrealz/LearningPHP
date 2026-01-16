@@ -16,6 +16,11 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPassWarning, setConfirmPassWarning] = useState(false);
 
+  const clearInputs = () => {
+    setUsername(""); setEmail("");
+    setPassword(""); setConfirmPassword("");
+  };
+
   useEffect(() => setNameWarning(username.length > 0 && !usernamePattern.test(username)), [username]);
 
   useEffect(() => setEmailWarning(email.length > 0 && !emailPattern.test(email)), [email]);
@@ -39,6 +44,7 @@ export default function SignUp({ addToNotifs, authenticatedUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    clearInputs();
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/signup.php`, {

@@ -10,6 +10,7 @@ export default function Login({ addToNotifs, authenticatedUser, setAuthenticated
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setPassword("");
     
     let res;
     let data;
