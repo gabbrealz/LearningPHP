@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import CloseIcon from "../assets/interface-icons/cross.svg?react";
 
 export default function Notifications({ notifStack, setNotifStack }) {
@@ -14,19 +14,22 @@ export default function Notifications({ notifStack, setNotifStack }) {
 }
 
 function Notification({ notif, index, setNotifStack }) {
-  const closeNotif = () => setNotifStack((prev) => prev.filter((entry) => entry.id !== notif.id));
+  const [beginRemoval, setBeginRemoval] = useState(false);
+
+  const closeNotif = () => {
+    setBeginRemoval(true);
+    setTimeout(() => setNotifStack(prev => prev.filter(entry => entry.id !== notif.id)), 250);
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setNotifStack((prev) => prev.filter((entry) => entry.id !== notif.id));
-    }, 5000);
-
+    const timer = setTimeout(closeNotif, 5000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className={`
-      w-1/2 p-2.5 fixed top-4 left-1/2 -translate-x-1/2 text-sm text-white rounded-full shadow-xs shadow-black transition animate-entry-slidedown
+      w-1/2 p-2.5 fixed top-4 left-1/2 -translate-x-1/2 text-sm text-white rounded-full shadow-xs shadow-black transition duration-250 animate-entry-slidedown
+      ${beginRemoval ? "opacity-0" : ""}
       ${notif.bgcolor}
     `} style={{
       transform: `translateY(${index*6}px) scaleX(${1 - index*0.05})`,
