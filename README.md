@@ -11,7 +11,6 @@ There is more content coming soon, but for now there is only auth.
 
 ### First, get the following if you haven't already:
 - npm
-- php
 - XAMPP
 
 ### Second, clone the project and set up the backend:
