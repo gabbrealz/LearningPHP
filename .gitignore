@@ -1,1 +1,12 @@
-backend/data/
+# GENERAL ===========================================================
+.env
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# FRONTEND ===========================================================
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+
+# BACKEND ==========================================================
