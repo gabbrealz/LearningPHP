@@ -31,16 +31,16 @@ There is more content coming soon, but for now there is only auth.
     echo "DB_PASS=" >> .env
     ```
 
-3. Create a symbolic link in `xampp/htdocs` pointing to `backend` (or copy-paste the `backend` folder in `xampp/htdocs` and rename it to `php-backend`)
+3. Create a symbolic link in `xampp/htdocs` pointing to `backend/api` (or copy-paste the `backend/api` folder in `xampp/htdocs` and rename it to `php-backend`)
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
-        ln -s "full/path/to/LearningPHP/backend" php-backend
+        ln -s "full/path/to/LearningPHP/backend/api" php-backend
         ```
     - Windows (Run Command Prompt as Administrator)
         ```Command Prompt
         cd "full/path/to/xampp/htdocs"
-        mklink /J php-backend "full/path/to/LearningPHP/backend"
+        mklink /J php-backend "full/path/to/LearningPHP/backend/api"
         ```
 
 ### Third, choose which method you want to set up the frontend:

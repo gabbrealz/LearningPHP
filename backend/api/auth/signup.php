@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
     exit;
 }
 
-require(__DIR__ . '/../config/bootstrap.php');
+require(__DIR__ . '/../../config/bootstrap.php');
 session_start();
 
 if (isset($_SESSION["user_id"])) {
@@ -52,9 +52,8 @@ try {
         exit;
     }
 
-    $insert_new_user = $pdo->prepare('INSERT INTO `User` VALUES (:id, :name, :email, :password);');
+    $insert_new_user = $pdo->prepare('INSERT INTO `User` (name, email, password) VALUES (:name, :email, :password);');
     $insert_new_user->execute([
-        'id' => $_POST['email'],
         'name' => $_POST['username'],
         'email'=> $_POST['email'],
         'password'=> password_hash($_POST['password'], PASSWORD_BCRYPT, ['cost' => 12])

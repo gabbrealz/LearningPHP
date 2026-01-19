@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-require(__DIR__ . '/../config/bootstrap.php');
+require(__DIR__ . '/../../config/bootstrap.php');
 session_start();
 
 if (isset($_SESSION["user_id"])) {
@@ -23,7 +23,7 @@ if (isset($_SESSION["user_id"])) {
 http_response_code(422);
 
 try {
-    $get_user_data = $pdo->prepare('SELECT * FROM `User`  WHERE email = ?');
+    $get_user_data = $pdo->prepare('SELECT * FROM `User` WHERE email = ?');
     $get_user_data->execute([$_POST['email']]);
     $user_data = $get_user_data->fetch(PDO::FETCH_ASSOC);
 
