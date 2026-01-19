@@ -46,20 +46,18 @@ There is more content coming soon, but for now there is only auth.
 
 ### Third, choose which method you want to set up the frontend:
 
+1. Create the frontend's .env file:
+    ```
+    cd frontend
+    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
+    ```
+
 #### Option A: Running frontend on XAMPP as well
 
-1. Starting from the `LearningPHP` working directory, build the frontend
+2. Starting from the `LearningPHP/frontend` working directory, build the frontend
     ```terminal
-    cd frontend
-    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
     npm install
     npm run build
-    ```
-
-2. Create the frontend's .env file:
-    ```
-    cd frontend
-    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
     ```
 
 3. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`)
