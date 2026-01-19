@@ -31,7 +31,7 @@ There is more content coming soon, but for now there is only auth.
     echo "DB_PASS=" >> .env
     ```
 
-3. Create a symbolic link in `xampp/htdocs` pointing to `backend/api` (or copy-paste the `backend/api` folder in `xampp/htdocs` and rename it to `php-backend`)
+3. Create a symbolic link in `xampp/htdocs` pointing to `backend/api` using the commands below (or copy-paste the `backend/api` folder in `xampp/htdocs` and rename it to `php-backend`)
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
@@ -45,13 +45,13 @@ There is more content coming soon, but for now there is only auth.
 
 ### Third, choose which method you want to set up the frontend:
 
+#### Option A: Running frontend on XAMPP as well
+
 1. Create the frontend's .env file:
     ```
     cd frontend
     echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
     ```
-
-#### Option A: Running frontend on XAMPP as well
 
 2. Starting from the `LearningPHP/frontend` working directory, build the frontend
     ```terminal
@@ -59,7 +59,7 @@ There is more content coming soon, but for now there is only auth.
     npm run build
     ```
 
-3. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`)
+3. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` using the commands below (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`)
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
@@ -73,7 +73,13 @@ There is more content coming soon, but for now there is only auth.
 
 #### Option B: Running frontend with Vite's development server
 
-1. Starting from the `LearningPHP/frontend` working directory, run the following:
+1. Create the frontend's .env file:
+    ```
+    cd frontend
+    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
+    ```
+
+2. Starting from the `LearningPHP/frontend` working directory, run the following:
     ```terminal
     npm install
     npm run dev
