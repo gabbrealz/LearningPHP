@@ -2,7 +2,10 @@ export default function ModalDialog({ data }) {
   if (!data.show) return null;
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-black/60">
-      <div className="fixed top-1/2 left-1/2 -translate-1/2 w-100 bg-white rounded-lg flex flex-col">
+      <div className={`
+        fixed top-1/2 left-1/2 -translate-1/2 bg-white rounded-lg flex flex-col
+        ${data.className ?? ""}
+      `}>
         {
           data.title === undefined ? null :
             <h3 className="px-6 py-2 shadow-lg rounded-t-lg">
