@@ -76,7 +76,7 @@ There is more content coming soon, but for now there is only auth.
 1. Create the frontend's .env file:
     ```
     cd frontend
-    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
+    echo VITE_BACKEND_BASE_URL=http://localhost/php-backend > .env
     ```
 
 2. Starting from the `LearningPHP/frontend` working directory, run the following:
