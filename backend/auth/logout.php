@@ -5,37 +5,38 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
-session_start();
-
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") exit;
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit;
 }
 
-if (isset($_SESSION["user_id"])) {
-    if (isset($_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"])) {
-        $cookie_key = $_COOKIE["LEARNINGPHP_REMEMBERME_COOKIE"];
-        
-        setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $cookie_key, time() - 3600, "/", "", false, true);
-        
-        $rememberme_data_file = "../data/remember-me.json";
-        $rememberme_data = file_exists($rememberme_data_file) ?
-            json_decode(file_get_contents($rememberme_data_file), true) ?? []
-            : [];
+require(__DIR__ . '/../config/bootstrap.php');
+session_start();
 
-        if (isset($rememberme_data[$cookie_key])) {
-            unset($rememberme_data[$cookie_key]);
-            file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
-        }
+http_response_code(401);
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(["error" => "User is not logged in."]);
+}
+
+try {
+    if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']])) {
+        $cookie_key = $_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']];
+
+        $remove_rememberme_data = $pdo->prepare('DELETE FROM `RememberMe` WHERE id = ?');
+        $remove_rememberme_data->execute([$cookie_key]);
+        
+        setcookie($_ENV['REMEMBERME_COOKIE_NAME'], $cookie_key, time() - 3600, "/", "", false, true);
     }
-
-    session_unset();
-    session_destroy();
-    http_response_code(200);
-    echo json_encode(["message" => "User has been logged out."]);
+}
+catch (PDOException $e) {
+    error_log($e->getMessage());
+    echo json_encode(["error" => "Sorry! We cannot process your request right now."]);
     exit;
 }
 
-http_response_code(401);
-echo json_encode(["error" => "User is not logged in."]);
+session_unset();
+session_destroy();
+http_response_code(200);
+echo json_encode(["message" => "User has been logged out."]);

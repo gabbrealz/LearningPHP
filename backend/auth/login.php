@@ -5,66 +5,55 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
-session_start();
-
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") exit;
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit;
 }
-else if (isset($_SESSION["user_id"])) {
+
+require(__DIR__ . '/../config/bootstrap.php');
+session_start();
+
+if (isset($_SESSION["user_id"])) {
     http_response_code(403);
     echo json_encode(["error" => "You are already logged in."]);
     exit;
 }
 
-$user_data_file = "../data/users.json";
-$user_data_dir = dirname($user_data_file);
-if (!is_dir($user_data_dir)) mkdir($user_data_dir, 0777, true);
-
 http_response_code(422);
 
 try {
-    if (!file_exists($user_data_file)) throw new Exception();
-    $user_data = json_decode(file_get_contents($user_data_file), true);
-}
-catch (Exception $e) {
-    echo json_encode(["error" => "User does not exist."]);
-    exit;
-}
+    $get_user_data = $pdo->prepare('SELECT * FROM `User`  WHERE email = ?');
+    $get_user_data->execute([$_POST['email']]);
+    $user_data = $get_user_data->fetch(PDO::FETCH_ASSOC);
 
-$email_index_file = "../data/email-index.json";
-$email_index_data = file_exists($email_index_file) ?
-    json_decode(file_get_contents($email_index_file), true) ?? []
-    : [];
+    if ($user_data && password_verify($_POST['password'], $user_data['password'])) {
+        $_SESSION['user_id'] = $user_data['id'];
+        $_SESSION['user_name'] = $user_data['name'];
 
-if (isset($email_index_data[$_POST["email"]])) {
-    $user_id = $email_index_data[$_POST["email"]];
-    $user = $user_data["users"][$user_id];
-
-    if (password_verify($_POST["password"], $user["password"])) {
-        $_SESSION["user_id"] = $user_id;
-        $_SESSION["user_name"] = $user["username"];
-
-        if (isset($_POST["remember-me"])) {
-            $rememberme_data_file = "../data/remember-me.json";
-            $rememberme_data = file_exists($rememberme_data_file) ?
-                json_decode(file_get_contents($rememberme_data_file), true) ?? []
-                : [];
-                
+        if (isset($_POST['remember-me'])) {
             $rememberme_cookie_key = generate_uuid_v4();
             $expiry_timestamp = time() + 60*60*24*7;
 
-            setcookie("LEARNINGPHP_REMEMBERME_COOKIE", $rememberme_cookie_key, $expiry_timestamp, "/", "", false, true);
+            $put_rememberme_data = $pdo->prepare('INSERT INTO `RememberMe` VALUES (:cookie_key, :user_id, :expiry_timestamp);');
+            $put_rememberme_data->execute([
+                'cookie_key' => $rememberme_cookie_key,
+                'user_id' => $user_data['id'],
+                'expiry_timestamp' => $expiry_timestamp
+            ]);
 
-            $rememberme_data[$rememberme_cookie_key] = ["user_id" => $user_id, "expiry_timestamp" => $expiry_timestamp];
-            file_put_contents($rememberme_data_file, json_encode($rememberme_data, JSON_PRETTY_PRINT));
+            setcookie($_ENV['REMEMBERME_COOKIE_NAME'], $rememberme_cookie_key, $expiry_timestamp, "/", "", false, true);
         }
 
         http_response_code(200);
-        echo json_encode(["username" => $user["username"], "message" => "Successfully logged in!"]);
+        echo json_encode(["username" => $user_data["name"], "message" => "Successfully logged in!"]);
         exit;
     }
+}
+catch (PDOException $e) {
+    error_log($e->getMessage());
+    echo json_encode(["error" => "Sorry! We cannot process your request right now."]);
+    exit;
 }
 
 echo json_encode(["error" => "Incorrect email or password."]);
