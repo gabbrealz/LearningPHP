@@ -1,9 +1,9 @@
 # WEBPROG - Act. 1 (Finals)
 
 ## Description
-A progressive project on web programming with PHP. Right now, it works by running
-the React + Tailwind CSS frontend separate from the PHP backend. The frontend
-communicates with the PHP backend via fetch calls.
+A progressive project on web programming with PHP. The project uses
+Vite React and Tailwind CSS for the frontend, PHP for the backend,
+and MySQL database.
 
 There is more content coming soon, but for now there is only auth.
 
@@ -21,7 +21,18 @@ There is more content coming soon, but for now there is only auth.
     git clone https://github.com/gabbrealz/LearningPHP.git
     ```
 
-2. Create a symbolic link in `xampp/htdocs` pointing to `backend` (or copy-paste the `backend` folder in `xampp/htdocs` and rename it to `php-backend`)
+2. Create the backend's .env file:
+    ```
+    cd backend
+    echo "REMEMBERME_COOKIE_NAME=LEARNINGPHP_REMEMBERME_COOKIE" > .env
+    echo "DB_HOST=localhost" >> .env
+    echo "DB_PORT=3306" >> .env
+    echo "DB_NAME=LearningPHP" >> .env
+    echo "DB_USER=root" >> .env
+    echo "DB_PASS=" >> .env
+    ```
+
+3. Create a symbolic link in `xampp/htdocs` pointing to `backend` (or copy-paste the `backend` folder in `xampp/htdocs` and rename it to `php-backend`)
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
@@ -45,7 +56,13 @@ There is more content coming soon, but for now there is only auth.
     npm run build
     ```
 
-2. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`)
+2. Create the frontend's .env file:
+    ```
+    cd frontend
+    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
+    ```
+
+3. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`)
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
@@ -59,17 +76,16 @@ There is more content coming soon, but for now there is only auth.
 
 #### Option B: Running frontend with Vite's development server
 
-1. Starting from the `LearningPHP` working directory, run the following:
+1. Starting from the `LearningPHP/frontend` working directory, run the following:
     ```terminal
-    cd frontend
-    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
     npm install
     npm run dev
     ```
 
 ## How to Run
 1. Open `XAMPP Control Panel`
-2. Start Apache
-3. Open a browser and paste the URL depending on which option you chose
+2. Start XAMPP's Apache module
+3. Start XAMPP's MySQL module
+4. Open a browser and paste the URL depending on which option you chose
     - Option A: `http://localhost/webprog-activity`
     - Option B: `http://localhost:5173`
