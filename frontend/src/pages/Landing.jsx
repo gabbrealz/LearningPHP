@@ -10,12 +10,9 @@ export default function Landing({ authenticatedUser }) {
               <span className="text-6xl mb-6 whitespace-nowrap">
                 Good day! Welcome back,
               </span>
-              <span className="text-6xl mb-16 underline underline-offset-10 text-indigo-900">
+              <span className="text-6xl underline underline-offset-10 text-indigo-900">
                 {authenticatedUser}
               </span>
-              <Link to="/tracker" className="text-lg px-6 py-2 bg-black text-white rounded-lg cursor-pointer hover:scale-102 transition-[scale]">
-                View Your Expenses
-              </Link>
             </>
             :
             <>
