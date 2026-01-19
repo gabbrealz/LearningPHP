@@ -11,27 +11,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-require(__DIR__ . '/../../config/bootstrap.php');
+require __DIR__ . '/../../config/bootstrap.php';
 session_start();
 
-http_response_code(401);
+require __DIR__ . '/../../repository/RememberMeRepository.php';
+http_response_code(response_code: 401);
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user'])) {
     echo json_encode(["error" => "User is not logged in."]);
+    exit;
 }
 
 try {
-    if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']])) {
-        $cookie_key = $_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']];
-
-        $remove_rememberme_data = $pdo->prepare('DELETE FROM `RememberMe` WHERE id = ?');
-        $remove_rememberme_data->execute([$cookie_key]);
-        
-        setcookie($_ENV['REMEMBERME_COOKIE_NAME'], $cookie_key, time() - 3600, "/", "", false, true);
-    }
+    if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']]))
+        (new RememberMeRepository($pdo))->remove_rememberme();
 }
 catch (PDOException $e) {
     error_log($e->getMessage());
+    
+    http_response_code(response_code: 500);
     echo json_encode(["error" => "Sorry! We cannot process your request right now."]);
     exit;
 }
