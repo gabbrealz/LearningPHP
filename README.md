@@ -23,12 +23,12 @@ There is more content coming soon, but for now there is only auth.
 2. Create the backend's .env file:
     ```
     cd backend
-    echo "REMEMBERME_COOKIE_NAME=LEARNINGPHP_REMEMBERME_COOKIE" > .env
-    echo "DB_HOST=localhost" >> .env
-    echo "DB_PORT=3306" >> .env
-    echo "DB_NAME=LearningPHP" >> .env
-    echo "DB_USER=root" >> .env
-    echo "DB_PASS=" >> .env
+    echo REMEMBERME_COOKIE_NAME=LEARNINGPHP_REMEMBERME_COOKIE > .env
+    echo DB_HOST=localhost >> .env
+    echo DB_PORT=3306 >> .env
+    echo DB_NAME=LearningPHP >> .env
+    echo DB_USER=root >> .env
+    echo DB_PASS= >> .env
     ```
 
 3. Create a symbolic link in `xampp/htdocs` pointing to `backend/api` using the commands below (or copy-paste the `backend/api` folder in `xampp/htdocs` and rename it to `php-backend`)
@@ -50,7 +50,7 @@ There is more content coming soon, but for now there is only auth.
 1. Create the frontend's .env file:
     ```
     cd frontend
-    echo "VITE_BACKEND_BASE_URL=http://localhost/php-backend" > .env
+    echo VITE_BACKEND_BASE_URL=http://localhost/php-backend > .env
     ```
 
 2. Starting from the `LearningPHP/frontend` working directory, build the frontend
