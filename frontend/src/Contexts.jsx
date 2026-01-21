@@ -4,16 +4,6 @@ export const AuthContext = createContext();
 export const ModalDataContext = createContext();
 export const NotifContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [authenticatedUser, setAuthenticatedUser] = useState("");
-
-  return (
-    <AuthContext.Provider value={{authenticatedUser, setAuthenticatedUser}}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
 export const InterfaceProvider = ({ children }) => {
   const [modalData, setModalData] = useState({ show: false });
   const [notifStack, setNotifStack] = useState([]);

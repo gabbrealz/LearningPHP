@@ -1,6 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { useEffect, useContext } from 'react';
-import { AuthProvider, InterfaceProvider, AuthContext } from './Contexts.jsx';
+import { useState, useEffect, useContext } from 'react';
+import { InterfaceProvider, AuthContext } from './Contexts.jsx';
 import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
 import ModalDialog from './components/ModalDialog.jsx';
@@ -11,7 +11,7 @@ import './assets/styles.css';
 
 
 export default function App() {
-  const {setAuthenticatedUser} = useContext(AuthContext);
+  const [authenticatedUser, setAuthenticatedUser] = useState("");
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/get-authenticated-user.php`, {
@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <AuthProvider>
+      <AuthContext.Provider value={{authenticatedUser, setAuthenticatedUser}}>
       <InterfaceProvider>
         <Header />
         <Notifications />
@@ -38,7 +38,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
       </InterfaceProvider>
-      </AuthProvider>
+      </AuthContext.Provider>
     </HashRouter>
   )
 }
