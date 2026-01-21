@@ -1,5 +1,5 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { InterfaceProvider, AuthContext } from './Contexts.jsx';
 import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
