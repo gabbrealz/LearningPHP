@@ -5,9 +5,9 @@ CREATE TABLE IF NOT EXISTS `User` (
     password TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `RememberMe` (
+CREATE TABLE IF NOT EXISTS `RememberMeToken` (
     id CHAR(36) PRIMARY KEY,
     user_id BIGINT UNIQUE NOT NULL,
     expiry_timestamp BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES `User`(id) ON DELETE CASCADE
+    CONSTRAINT rememberme_user_fkey FOREIGN KEY (user_id) REFERENCES `User`(id) ON DELETE CASCADE
 );

@@ -21,7 +21,7 @@ if (isset($_SESSION['user'])) {
 }
 
 require __DIR__ . '/../../repository/UserRepository.php';
-require __DIR__ . '/../../repository/RememberMeRepository.php';
+require __DIR__ . '/../../repository/RememberMeTokenRepository.php';
 http_response_code(422);
 
 try {
@@ -31,7 +31,7 @@ try {
         $_SESSION['user'] = $user;
 
         if (isset($_POST['remember-me']))
-            (new RememberMeRepository($pdo))->add_rememberme($user->get_id());
+            (new RememberMeTokenRepository($pdo))->add_rememberme($user->get_id());
 
         http_response_code(200);
         echo json_encode(["username" => $user->name, "message" => "Successfully logged in!"]);

@@ -16,7 +16,7 @@ require __DIR__ . '/../../popo/User.php';
 session_start();
 
 require __DIR__ . '/../../repository/UserRepository.php';
-require __DIR__ . '/../../repository/RememberMeRepository.php';
+require __DIR__ . '/../../repository/RememberMeTokenRepository.php';
 http_response_code(200);
 
 if (isset($_SESSION["user"])) {
@@ -26,7 +26,7 @@ if (isset($_SESSION["user"])) {
 
 if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']])) {
     try {
-        $rememberme_repo = new RememberMeRepository($pdo);
+        $rememberme_repo = new RememberMeTokenRepository($pdo);
         $rememberme_data = $rememberme_repo->get_rememberme_data();
 
         if ($rememberme_data) {

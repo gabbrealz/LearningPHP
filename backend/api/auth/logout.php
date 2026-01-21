@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require __DIR__ . '/../../config/bootstrap.php';
 session_start();
 
-require __DIR__ . '/../../repository/RememberMeRepository.php';
+require __DIR__ . '/../../repository/RememberMeTokenRepository.php';
 http_response_code(response_code: 401);
 
 if (!isset($_SESSION['user'])) {
@@ -24,7 +24,7 @@ if (!isset($_SESSION['user'])) {
 
 try {
     if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']]))
-        (new RememberMeRepository($pdo))->remove_rememberme();
+        (new RememberMeTokenRepository($pdo))->remove_rememberme();
 }
 catch (PDOException $e) {
     error_log($e->getMessage());
