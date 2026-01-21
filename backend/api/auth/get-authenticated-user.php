@@ -27,16 +27,12 @@ if (isset($_SESSION["user"])) {
 if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']])) {
     try {
         $rememberme_repo = new RememberMeTokenRepository($pdo);
-        $rememberme_data = $rememberme_repo->get_rememberme_data();
+        $user = $rememberme_repo->get_user_data();
 
-        if ($rememberme_data) {
-            $user = (new UserRepository($pdo))->get_user_by_id($rememberme_data['user_id']);
-
-            if ($user) {
-                $_SESSION['user'] = $user;
-                echo json_encode(["authenticated" => true, "username" => $user->name]);
-                exit;
-            }
+        if ($user) {
+            $_SESSION['user'] = $user;
+            echo json_encode(["authenticated" => true, "username" => $user->name]);
+            exit;
         }
         else $rememberme_repo->remove_rememberme();
     }
