@@ -2,11 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext, useId, use } from "react";
 import { AuthContext, NotifContext } from "../Contexts.jsx";
 import { FormInput, PasswordInput } from "../components/FormInput.jsx";
+import LoadingIcon from "../assets/interface-icons/loading.svg?react";
 
 export default function Login() {
   const navigate = useNavigate();
   const {authenticatedUser, setAuthenticatedUser} = useContext(AuthContext);
   const {addToNotifs} = useContext(NotifContext);
+
+  const [loading, setLoading] = useState(false);
 
   const [authChecked, setAuthChecked] = useState(false);
   const [email, setEmail] = useState("");
@@ -14,6 +17,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setPassword("");
     
     let res;
@@ -46,6 +50,7 @@ export default function Login() {
         message: "Sorry! We can't process your request right now."
       });
       console.error(error);
+      setLoading(false);
       return;
     }
 
@@ -55,6 +60,8 @@ export default function Login() {
       message: data.message
     });
     setAuthChecked(true);
+    setLoading(false);
+
     navigate("/");
   };
 
@@ -80,7 +87,14 @@ export default function Login() {
           <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword} />
           <RememberMe />
           <div className="w-4/5 flex flex-col mt-6">
-            <input type="submit" id="login-submit" value="Login" className="w-full text-white bg-green-700 mb-2 border py-1.5 rounded-md cursor-pointer hover:bg-green-600 transition-colors" />
+            { loading ? (
+                <div className="w-full h-10 bg-green-600 mb-2 rounded-md flex justify-center items-center">
+                  <LoadingIcon className="size-6 animate-spin fill-white" />
+                </div>
+              )
+              :
+              <input type="submit" id="login-submit" value="Login" className="w-full h-10 text-white bg-green-700 mb-2 py-1.5 rounded-md cursor-pointer hover:bg-green-600 transition-colors" />
+            }
             <span className="w-full text-center text-sm">
               Don't have an account? {" "}
               <Link to="/sign-up" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">

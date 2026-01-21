@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext, ModalDataContext, NotifContext } from "../Contexts.jsx";
+import LoadingIcon from "../assets/interface-icons/loading.svg?react";
 
 export default function Header() {
   const {authenticatedUser} = useContext(AuthContext);
@@ -42,7 +43,10 @@ function LogoutButton() {
   const {setModalData} = useContext(ModalDataContext);
   const {addToNotifs} = useContext(NotifContext);
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogout = async () => {
+    setLoading(true);
     try {
       let res = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/logout.php`, {
         method: "POST",
@@ -65,7 +69,6 @@ function LogoutButton() {
           message: data.error
         });
       }
-      setModalData({ show: false });
     }
     catch (error) {
       addToNotifs({
@@ -73,7 +76,10 @@ function LogoutButton() {
         message: "Sorry! We can't process your request right now."
       });
       console.error(error);
-      return;
+    }
+    finally {
+      setModalData({ show: false });
+      setLoading(false);
     }
   };
 
@@ -92,10 +98,14 @@ function LogoutButton() {
 
   return (
     <button onClick={clickLogoutButton} className="
-      text-sm text-white px-2 py-1 border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
+      w-20 h-8 flex justify-center items-center px-2 py-1
+      text-sm text-white border rounded-lg border-red-700 bg-red-700 transition-colors cursor-pointer
       lg:px-4 lg:border-white lg:bg-transparent lg:hover:border-red-700 lg:hover:bg-red-700
     ">
-      Logout
+      { loading ?
+        <LoadingIcon className="size-4 animate-spin fill-white" />
+        : "Logout"
+      }
     </button>
   );
 }

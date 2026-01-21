@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext, NotifContext } from "../Contexts.jsx";
 import { FormInput, PasswordInput } from "../components/FormInput.jsx";
+import LoadingIcon from "../assets/interface-icons/loading.svg?react";
 
 const usernamePattern = /^[A-Za-z0-9_]+$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
@@ -10,6 +11,8 @@ export default function SignUp() {
   const navigate = useNavigate();
   const {authenticatedUser} = useContext(AuthContext);
   const {addToNotifs} = useContext(NotifContext);
+
+  const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
@@ -43,6 +46,7 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setUsername(""); setEmail("");
     setPassword(""); setConfirmPassword("");
 
@@ -78,8 +82,11 @@ export default function SignUp() {
         message: "Sorry! We can't process your request right now."
       });
       console.error(error);
+      setLoading(false);
       return;
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -109,8 +116,15 @@ export default function SignUp() {
                         showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
 
           <div className="w-4/5 flex flex-col mt-6">
-            <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
-                  className="w-full text-white bg-indigo-600 mx-auto mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+            { loading ? (
+                <div className="w-full h-10 bg-indigo-500 mb-2 rounded-md flex justify-center items-center">
+                  <LoadingIcon className="size-6 animate-spin fill-white" />
+                </div>
+              )
+              :
+              <input type="submit" id="signup-submit" value="Sign Up" disabled={nameWarning || emailWarning || passWarning || confirmPassWarning}
+                     className="w-full h-10 text-white bg-indigo-600 mx-auto mb-2 py-1.5 rounded-md cursor-pointer disabled:cursor-auto disabled:bg-indigo-400 hover:bg-indigo-500 transition-colors" />
+            }
             <span className="w-full mx-auto text-center text-sm">
               Already have an account? {" "}
               <Link to="/login" className="whitespace-nowrap text-blue-900 hover:text-blue-600 hover:underline">
