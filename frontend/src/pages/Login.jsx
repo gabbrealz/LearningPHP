@@ -1,9 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useId } from "react";
-import { FormInput, PasswordInput } from "../components/FormInput";
+import { useState, useEffect, useContext, useId, use } from "react";
+import { AuthContext, NotifContext } from "../Contexts.jsx";
+import { FormInput, PasswordInput } from "../components/FormInput.jsx";
 
-export default function Login({ addToNotifs, authenticatedUser, setAuthenticatedUser }) {
+export default function Login() {
   const navigate = useNavigate();
+  const {authenticatedUser, setAuthenticatedUser} = useContext(AuthContext);
+  const {addToNotifs} = useContext(NotifContext);
+
   const [authChecked, setAuthChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

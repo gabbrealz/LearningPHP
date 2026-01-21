@@ -1,19 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { NotifContext } from "../Contexts.jsx";
 import CloseIcon from "../assets/interface-icons/cross.svg?react";
 
-export default function Notifications({ notifStack, setNotifStack }) {
+export default function Notifications() {
+  const {notifStack} = useContext(NotifContext);
+
   return (
     <>
       {
         notifStack.map((notif, index) => 
-          <Notification key={notif.id} notif={notif} index={index} setNotifStack={setNotifStack} />
+          <Notification key={notif.id} notif={notif} index={index} />
         )
       }
     </>
   );
 }
 
-function Notification({ notif, index, setNotifStack }) {
+function Notification({ notif, index }) {
+  const {setNotifStack} = useContext(NotifContext);
   const [beginRemoval, setBeginRemoval] = useState(false);
 
   const closeNotif = () => {

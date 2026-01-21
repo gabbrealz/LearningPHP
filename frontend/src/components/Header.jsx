@@ -1,6 +1,10 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext, ModalDataContext, NotifContext } from "../Contexts.jsx";
 
-export default function Header({ addToNotifs, setModalData, authenticatedUser, setAuthenticatedUser }) {
+export default function Header() {
+  const {authenticatedUser} = useContext(AuthContext);
+
   return (
     <header className="z-100 fixed top-0 left-0 w-full py-4 bg-black px-4 sm:px-12 md:px-20 lg:px-28 xl:px-36">
       <nav className="w-full flex">
@@ -9,7 +13,7 @@ export default function Header({ addToNotifs, setModalData, authenticatedUser, s
         </Link>
         <div className="ml-auto w-1/2 flex justify-end items-center gap-2 lg:gap-4">
           { authenticatedUser ?
-            <LogoutButton addToNotifs={addToNotifs} setModalData={setModalData} setAuthenticatedUser={setAuthenticatedUser} />
+            <LogoutButton />
             :
             <>
               <Link to="/login" className="
@@ -32,8 +36,11 @@ export default function Header({ addToNotifs, setModalData, authenticatedUser, s
   )
 };
 
-function LogoutButton({ addToNotifs, setModalData, setAuthenticatedUser }) {
+function LogoutButton() {
   const navigate = useNavigate();
+  const {setAuthenticatedUser} = useContext(AuthContext);
+  const {setModalData} = useContext(ModalDataContext);
+  const {addToNotifs} = useContext(NotifContext);
 
   const handleLogout = async () => {
     try {

@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { AuthProvider, InterfaceProvider, AuthContext } from './Contexts.jsx';
 import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
 import ModalDialog from './components/ModalDialog.jsx';
@@ -10,15 +11,7 @@ import './assets/styles.css';
 
 
 export default function App() {
-  const [authenticatedUser, setAuthenticatedUser] = useState("");
-  const [notifStack, setNotifStack] = useState([]);
-  const [modalData, setModalData] = useState({ show: false });
-  const addToNotifs = (notif) => {
-    setNotifStack((prev) => {
-      const newStack = [{...notif, id: crypto.randomUUID()}, ...prev];
-      return newStack.splice(0, 5);
-    });
-  };
+  const {setAuthenticatedUser} = useContext(AuthContext);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/get-authenticated-user.php`, {
@@ -34,16 +27,18 @@ export default function App() {
 
   return (
     <HashRouter>
-      <Header addToNotifs={addToNotifs} setModalData={setModalData} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />
-
-      <Notifications notifStack={notifStack} setNotifStack={setNotifStack} />
-      <ModalDialog data={modalData} />
-
-      <Routes>
-        <Route path="/" element={<Landing authenticatedUser={authenticatedUser} />} />
-        <Route path="/login" element={<Login addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} setAuthenticatedUser={setAuthenticatedUser} />} />
-        <Route path="/sign-up" element={<SignUp addToNotifs={addToNotifs} authenticatedUser={authenticatedUser} />} />
-      </Routes>
+      <AuthProvider>
+      <InterfaceProvider>
+        <Header />
+        <Notifications />
+        <ModalDialog />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Routes>
+      </InterfaceProvider>
+      </AuthProvider>
     </HashRouter>
   )
 }

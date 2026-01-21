@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext, NotifContext } from "../Contexts.jsx";
 import { FormInput, PasswordInput } from "../components/FormInput.jsx";
 
 const usernamePattern = /^[A-Za-z0-9_]+$/;
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-export default function SignUp({ addToNotifs, authenticatedUser }) {
+export default function SignUp() {
   const navigate = useNavigate();
+  const {authenticatedUser} = useContext(AuthContext);
+  const {addToNotifs} = useContext(NotifContext);
+
   const [username, setUsername] = useState("");
   const [nameWarning, setNameWarning] = useState(false);
   const [email, setEmail] = useState("");
