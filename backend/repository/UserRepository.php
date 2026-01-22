@@ -27,10 +27,10 @@ class UserRepository {
     }
 
     public function get_user_by_email(String $email): mixed {
-        $get_user_data = $this->pdo->prepare('SELECT id, name, email FROM `User` WHERE email = ?');
+        $get_user_data = $this->pdo->prepare('SELECT id, name, email, password_hash FROM `User` WHERE email = ?');
         $get_user_data->execute([$email]);
 
         $data = $get_user_data->fetch(PDO::FETCH_ASSOC);
-        return $data ? new User($data['id'], $data['name'], $data['email'], '') : null;
+        return $data ? new User($data['id'], $data['name'], $data['email'], $data['password_hash']) : null;
     }
 }
