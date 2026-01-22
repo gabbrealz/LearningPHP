@@ -71,7 +71,6 @@ export default function SignUp() {
       }
       else if (res.status === 403) {
         location.reload();
-        return;
       }
       else {
         addToNotifs({
@@ -86,11 +85,8 @@ export default function SignUp() {
         message: "Sorry! We can't process your request right now."
       });
       console.error(error);
-      setLoading(false);
-      return;
     }
-
-    setLoading(false);
+    finally { setLoading(false); }
   };
 
   useEffect(() => {

@@ -34,15 +34,23 @@ export default function Login() {
 
       if (res.status === 403) {
         location.reload();
-        return;
       }
       else if (!res.ok) {
         addToNotifs({
           bgcolor: "bg-red-700",
           message: data.error
         });
-        return;
       }
+      else {
+        setAuthenticatedUser(data.username);
+        addToNotifs({
+          bgcolor: "bg-green-700",
+          message: data.message
+        });
+        setAuthChecked(true);
+        navigate("/");
+      }
+
     }
     catch (error) {
       addToNotifs({
@@ -50,19 +58,8 @@ export default function Login() {
         message: "Sorry! We can't process your request right now."
       });
       console.error(error);
-      setLoading(false);
-      return;
     }
-
-    setAuthenticatedUser(data.username);
-    addToNotifs({
-      bgcolor: "bg-green-700",
-      message: data.message
-    });
-    setAuthChecked(true);
-    setLoading(false);
-
-    navigate("/");
+    finally { setLoading(false); }
   };
 
   useEffect(() => {
