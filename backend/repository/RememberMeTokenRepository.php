@@ -19,7 +19,7 @@ class RememberMeTokenRepository {
     public function get_user_data(): User|null {
         $cookie_key = $_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']];
 
-        $get_user_data = $this->pdo->prepare("SELECT u.* FROM `User` u JOIN `RememberMeToken` r ON u.id = r.user_id WHERE r.id = ?");
+        $get_user_data = $this->pdo->prepare("SELECT u.* FROM `User` u JOIN `RememberMeToken` r ON u.id = r.user_id WHERE r.token = ?");
         $get_user_data->execute([$cookie_key]);
 
         $user = $get_user_data->fetch(PDO::FETCH_ASSOC);
@@ -43,7 +43,7 @@ class RememberMeTokenRepository {
     public function remove_rememberme(): void {
         $cookie_key = $_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']];
 
-        $remove_rememberme_data = $this->pdo->prepare('DELETE FROM `RememberMeToken` WHERE id = ?');
+        $remove_rememberme_data = $this->pdo->prepare('DELETE FROM `RememberMeToken` WHERE token = ?');
         $remove_rememberme_data->execute([$cookie_key]);
         
         setcookie($_ENV['REMEMBERME_COOKIE_NAME'], $cookie_key, time() - 3600, "/", "", false, true);

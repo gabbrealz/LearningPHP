@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `User` (
 );
 
 CREATE TABLE IF NOT EXISTS `RememberMeToken` (
-    id CHAR(36) PRIMARY KEY,
+    token CHAR(36) PRIMARY KEY,
     user_id BIGINT UNIQUE NOT NULL,
     expiry_timestamp BIGINT NOT NULL,
     CONSTRAINT rememberme_user_fkey FOREIGN KEY (user_id) REFERENCES `User`(id) ON DELETE CASCADE
