@@ -32,8 +32,8 @@ try {
     (new UserRepository($pdo))->register_user($new_user);
 }
 catch (PDOException $e) {
-    $uniquekey_violation_statuscode = 23505;
-    if ($e->getCode() == $uniquekey_violation_statuscode)
+    $integrity_violation_statuscode = 23000;
+    if ($e->getCode() == $integrity_violation_statuscode)
         return_error('Email is already registered');
 
     error_log($e->getMessage());
