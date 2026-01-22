@@ -23,6 +23,10 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPassWarning, setConfirmPassWarning] = useState(false);
 
+  const changeUsername = (newValue) => { if (newValue.length <= 20) setUsername(newValue); };
+  const changePassword = (newValue) => { if (newValue.length <= 64) setPassword(newValue); };
+  const changeConfirmPassword = (newValue) => { if (newValue.length <= 64) setConfirmPassword(newValue); };
+
   useEffect(() => setNameWarning(username.length > 0 && !usernamePattern.test(username)), [username]);
 
   useEffect(() => setEmailWarning(email.length > 0 && !emailPattern.test(email)), [email]);
@@ -106,13 +110,13 @@ export default function SignUp() {
           <h2 className="text-xl mb-4 tracking-widest">
             SIGN UP
           </h2>
-          <FormInput inputName="username" label="Username" type="text" value={username} setValue={setUsername}
+          <FormInput inputName="username" label="Username" type="text" value={username} setValue={changeUsername}
                     showWarning={nameWarning} warningMessage="Username cannot have symbols or spaces." />
           <FormInput inputName="email" label="Email" type="email" value={email} setValue={setEmail}
                     showWarning={emailWarning} warningMessage="Email is invalid." />
-          <PasswordInput inputName="password" label="Password" value={password} setValue={setPassword}
+          <PasswordInput inputName="password" label="Password" value={password} setValue={changePassword}
                         showWarning={passWarning} warningMessage="Password must have at least 8 characters, 1 digit, and 1 upper-case letter." />
-          <PasswordInput inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={setConfirmPassword}
+          <PasswordInput inputName="confirm-password" label="Confirm Password" value={confirmPassword} setValue={changeConfirmPassword}
                         showWarning={confirmPassWarning} warningMessage="Passwords do not match." />
 
           <div className="w-4/5 flex flex-col mt-6">

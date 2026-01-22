@@ -49,12 +49,16 @@ exit;
 function validate_signup_form(String $username, String $email, String $password, String $confirm_password) {
     if (!preg_match("/^[A-Za-z0-9_]+$/", $username))
         return_error('Username can only have A-Z, 0-9, and underscore.');
+    else if (strlen($username) > 20)
+        return_error('Username cannot be more than 20 characters.');
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         return_error('Email is invalid.');
     else if ($password !== $confirm_password)
         return_error('Passwords do not match.');
     else if (strlen($password) < 8)
         return_error('Password must be at least 8 characters.');
+    else if (strlen($password) > 64)
+        return_error('Password cannot be more than 64 characters.');
     else if (!preg_match("/\d/", $password) || !preg_match("/[A-Z]/", $password))
         return_error('Password must have at least 1 digit and 1 upper-case letter.');
 }
