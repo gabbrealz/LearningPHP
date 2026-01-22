@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS `User` (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(15) NOT NULL,
+    name VARCHAR(20) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password_hash TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `RememberMeToken` (
