@@ -16,8 +16,7 @@ session_start();
 
 if (isset($_SESSION['user'])) {
     http_response_code(403);
-    echo json_encode(["error" => "You are already logged in."]);
-    exit;
+    return_error('You are already logged in.');
 }
 
 require __DIR__ . '/../../repository/UserRepository.php';
@@ -42,8 +41,13 @@ catch (PDOException $e) {
     error_log($e->getMessage());
 
     http_response_code(response_code: 500);
-    echo json_encode(["error" => "Sorry! We cannot process your request right now."]);
-    exit;
+    return_error('Sorry! We cannot process your request right now.');
 }
 
-echo json_encode(["error" => "Incorrect email or password."]);
+return_error('Incorrect email or password.');
+
+
+function return_error(String $message): void {
+    echo json_encode(['error' => $message]);
+    exit;
+}

@@ -16,8 +16,7 @@ session_start();
 
 if (isset($_SESSION["user"])) {
     http_response_code(403);
-    echo json_encode(["error" => "You are already logged in."]);
-    exit;
+    return_error('You are already logged in.');
 }
 
 require __DIR__ . '/../../repository/UserRepository.php';
@@ -31,10 +30,8 @@ validate_signup_form(
 try {
     $user_repo = new UserRepository($pdo);
 
-    if ($user_repo->is_email_registered($_POST['email'])) {
-        echo json_encode(['error' => 'Email is already registered.']);
-        exit;
-    }
+    if ($user_repo->is_email_registered($_POST['email']))
+        return_error('Email is already registered');
 
     $new_user = new User(0, $_POST['username'], $_POST['email'], $_POST['password'], true);
     $user_repo->register_user($new_user);
@@ -43,8 +40,7 @@ catch (PDOException $e) {
     error_log($e->getMessage());
 
     http_response_code(response_code: 500);
-    echo json_encode(['error' => 'Sorry! We cannot process your request right now.']);
-    exit;
+    return_error('Sorry! We cannot process your request right now.');
 }
 
 http_response_code(201);
@@ -53,24 +49,19 @@ exit;
 
 
 function validate_signup_form(String $username, String $email, String $password, String $confirm_password) {
-    if (!preg_match("/^[A-Za-z0-9_]+$/", $username)) {
-        echo json_encode(['error' => 'Username can only have A-Z, 0-9, and underscore.']);
-        exit;
-    }
-    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['error' => 'Email is invalid.']);
-        exit;
-    }
-    else if ($password !== $confirm_password) {
-        echo json_encode(['error' => 'Passwords do not match.']);
-        exit;
-    }
-    else if (strlen($password) < 8) {
-        echo json_encode(['error' => 'Password must be at least 8 characters.']);
-        exit;
-    }
-    else if (!preg_match("/\d/", $password) || !preg_match("/[A-Z]/", $password)) {
-        echo json_encode(['error' => 'Password must have at least 1 digit and 1 upper-case letter.']);
-        exit;
-    }   
+    if (!preg_match("/^[A-Za-z0-9_]+$/", $username))
+        return_error('Username can only have A-Z, 0-9, and underscore.');
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        return_error('Email is invalid.');
+    else if ($password !== $confirm_password)
+        return_error('Passwords do not match.');
+    else if (strlen($password) < 8)
+        return_error('Password must be at least 8 characters.');
+    else if (!preg_match("/\d/", $password) || !preg_match("/[A-Z]/", $password))
+        return_error('Password must have at least 1 digit and 1 upper-case letter.');
+}
+
+function return_error(String $message): void {
+    echo json_encode(['error' => $message]);
+    exit;
 }
