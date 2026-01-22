@@ -28,17 +28,15 @@ validate_signup_form(
 );
 
 try {
-    $user_repo = new UserRepository($pdo);
-
-    if ($user_repo->is_email_registered($_POST['email']))
-        return_error('Email is already registered');
-
     $new_user = new User(0, $_POST['username'], $_POST['email'], $_POST['password'], true);
-    $user_repo->register_user($new_user);
+    (new UserRepository($pdo))->register_user($new_user);
 }
 catch (PDOException $e) {
-    error_log($e->getMessage());
+    $uniquekey_violation_statuscode = 23505;
+    if ($e->getCode() == $uniquekey_violation_statuscode)
+        return_error('Email is already registered');
 
+    error_log($e->getMessage());
     http_response_code(response_code: 500);
     return_error('Sorry! We cannot process your request right now.');
 }
