@@ -5,6 +5,7 @@ require __DIR__ . '/read-env.php';
 if (!is_dir(__DIR__ . '/locks')) mkdir(__DIR__ . '/locks', 0777, true);
 
 $init_db_lock = __DIR__ . '/locks/init-db.lock';
+$init_db_fromscratch = __DIR__ . '/locks/init-db-fromscratch.done';
 $init_db_done = __DIR__ . '/locks/init-db.done';
 $lock_handle = fopen($init_db_lock, 'c+');
 
@@ -18,6 +19,14 @@ try {
     if (!file_exists($init_db_done) && $lock_handle && flock($lock_handle, LOCK_EX | LOCK_NB)) {
         $pdo = new PDO($dsn, 'root', $db_root_pass, [PDO::MYSQL_ATTR_MULTI_STATEMENTS => true]);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        if (!file_exists($init_db_fromscratch)) {
+            $pdo->exec("
+                DROP DATABASE IF EXISTS $db_name;
+                DROP USER IF EXISTS '$db_user'@'%';
+            ");
+            touch($init_db_fromscratch);
+        }
 
         $pdo->exec("
             CREATE DATABASE IF NOT EXISTS $db_name;
