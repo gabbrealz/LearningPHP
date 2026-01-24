@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS `User` (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
+    password_hash TEXT NOT NULL,
+    role ENUM('user', 'employee', 'admin') NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE IF NOT EXISTS `RememberMeToken` (

@@ -19,18 +19,18 @@ class UserRepository {
     }
 
     public function get_user_by_id(int $id): mixed {
-        $get_user_data = $this->pdo->prepare('SELECT id, name, email FROM `User` WHERE id = ?');
+        $get_user_data = $this->pdo->prepare('SELECT name, email, role FROM `User` WHERE id = ?');
         $get_user_data->execute([$id]);
 
         $data = $get_user_data->fetch(PDO::FETCH_ASSOC);
-        return $data ? new User($data['id'], $data['name'], $data['email'], '') : null;
+        return $data ? new User($id, $data['name'], $data['email'], $data['role']) : null;
     }
 
     public function get_user_by_email(String $email): mixed {
-        $get_user_data = $this->pdo->prepare('SELECT id, name, email, password_hash FROM `User` WHERE email = ?');
+        $get_user_data = $this->pdo->prepare('SELECT id, name, role, password_hash FROM `User` WHERE email = ?');
         $get_user_data->execute([$email]);
 
         $data = $get_user_data->fetch(PDO::FETCH_ASSOC);
-        return $data ? new User($data['id'], $data['name'], $data['email'], $data['password_hash']) : null;
+        return $data ? new User($data['id'], $data['name'], $email, $data['role'], $data['password_hash']) : null;
     }
 }

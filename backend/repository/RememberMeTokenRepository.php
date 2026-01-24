@@ -10,11 +10,11 @@ class RememberMeTokenRepository {
     public function get_user_data(): User|null {
         $cookie_key = $_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']];
 
-        $get_user_data = $this->pdo->prepare('SELECT u.id, u.name, u.email FROM `User` u JOIN `RememberMeToken` r ON u.id = r.user_id WHERE r.token = ?');
+        $get_user_data = $this->pdo->prepare('SELECT u.id, u.name, u.email, u.role FROM `User` u JOIN `RememberMeToken` r ON u.id = r.user_id WHERE r.token = ?');
         $get_user_data->execute([$cookie_key]);
 
         $user = $get_user_data->fetch(PDO::FETCH_ASSOC);
-        return $user ? new User($user['id'], $user['name'], $user['email'], '') : null;
+        return $user ? new User($user['id'], $user['name'], $user['email'], $user['role']) : null;
     }
 
     public function add_rememberme(int $user_id): void {

@@ -28,7 +28,7 @@ validate_signup_form(
 );
 
 try {
-    $new_user = new User(0, $_POST['username'], $_POST['email'], $_POST['password'], true);
+    $new_user = new User(0, $_POST['username'], $_POST['email'], password: $_POST['password'], pass_is_plaintext: true);
     (new UserRepository($pdo))->register_user($new_user);
 }
 catch (PDOException $e) {

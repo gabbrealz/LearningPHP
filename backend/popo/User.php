@@ -5,12 +5,14 @@ class User {
     public string $name;
     private string $email;
     private string $password;
+    public string $role;
 
-    public function __construct(int $id, string $name, String $email, string $password, bool $pass_is_plaintext = false) {
+    public function __construct(int $id, string $name, string $email, string $role = 'user', string $password = '', bool $pass_is_plaintext = false) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->set_password($password, $pass_is_plaintext);
+        $this->role = $role;
     }
 
     public function verify_password(string $password) {

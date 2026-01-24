@@ -41,11 +41,12 @@ try {
         $db_init_queries = file_get_contents(__DIR__ . '/db-init.sql');
         $pdo->exec($db_init_queries);
         
-        $stmt = $pdo->prepare('INSERT INTO `User` (name, email, password_hash) VALUES (:name, :email, :password);');
+        $stmt = $pdo->prepare('INSERT INTO `User` (name, email, password_hash, role) VALUES (:name, :email, :password, :role)');
         $stmt->execute([
             'name' => 'christian',
             'email' => 'christian@learningphp.com',
-            'password'=> password_hash('1234567A', PASSWORD_BCRYPT, ['cost' => 12])
+            'password'=> password_hash('1234567A', PASSWORD_BCRYPT, ['cost' => 12]),
+            'role' => 'admin',
         ]);
 
         touch($init_db_done);
