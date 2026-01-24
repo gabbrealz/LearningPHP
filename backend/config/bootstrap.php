@@ -24,16 +24,14 @@ try {
             $pdo->exec("
                 DROP DATABASE IF EXISTS $db_name;
                 DROP USER IF EXISTS '$db_user'@'%';
+
+                CREATE DATABASE $db_name;
+                CREATE USER '$db_user'@'%' IDENTIFIED BY '$db_pass';
+                GRANT ALL PRIVILEGES ON $db_name.* TO '$db_user'@'%';
+                FLUSH PRIVILEGES;
             ");
             touch($init_db_fromscratch);
         }
-
-        $pdo->exec("
-            CREATE DATABASE IF NOT EXISTS $db_name;
-            CREATE USER IF NOT EXISTS '$db_user'@'%' IDENTIFIED BY '$db_pass';
-            GRANT ALL PRIVILEGES ON $db_name.* TO '$db_user'@'%';
-            FLUSH PRIVILEGES;
-        ");
 
         $pdo = new PDO((string) $dsn . ";dbname=$db_name", $db_user, $db_pass, [PDO::MYSQL_ATTR_MULTI_STATEMENTS => true]);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
