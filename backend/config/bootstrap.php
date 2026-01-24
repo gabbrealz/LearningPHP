@@ -2,24 +2,52 @@
 
 require __DIR__ . '/read-env.php';
 
+if (!is_dir(__DIR__ . '/locks')) mkdir(__DIR__ . '/locks', 0777, true);
+
+$init_db_lock = __DIR__ . '/locks/init-db.lock';
+$init_db_done = __DIR__ . '/locks/init-db.done';
+$lock_handle = fopen($init_db_lock, 'c+');
+
+$dsn = "mysql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']}";
+$db_name = $_ENV['DB_NAME'];
+$db_user = $_ENV['DB_USER'];
+$db_pass = $_ENV['DB_PASS'];
+$db_root_pass = $_ENV['DB_ROOT_PASS'];
+
 try {
-    $pdo = new PDO("mysql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']}", $_ENV['DB_USER'], $_ENV['DB_PASS']);
+    if (!file_exists($init_db_done) && $lock_handle && flock($lock_handle, LOCK_EX | LOCK_NB)) {
+        $pdo = new PDO($dsn, 'root', $db_root_pass, [PDO::MYSQL_ATTR_MULTI_STATEMENTS => true]);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $pdo->exec("
+            CREATE DATABASE IF NOT EXISTS $db_name;
+            CREATE USER IF NOT EXISTS '$db_user'@'%' IDENTIFIED BY '$db_pass';
+            GRANT ALL PRIVILEGES ON $db_name.* TO '$db_user'@'%';
+            FLUSH PRIVILEGES;
+        ");
+
+        $pdo = new PDO((string) $dsn . ";dbname=$db_name", $db_user, $db_pass, [PDO::MYSQL_ATTR_MULTI_STATEMENTS => true]);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $db_init_queries = file_get_contents(__DIR__ . '/db-init.sql');
+        $pdo->exec($db_init_queries);
+        
+        $stmt = $pdo->prepare('INSERT INTO `User` (name, email, password_hash) VALUES (:name, :email, :password);');
+        $stmt->execute([
+            'name' => 'christian',
+            'email' => 'christian@learningphp.com',
+            'password'=> password_hash('1234567A', PASSWORD_BCRYPT, ['cost' => 12])
+        ]);
+
+        touch($init_db_done);
+    }
+    
+    $pdo = new PDO((string) $dsn . ";dbname=$db_name", $db_user, $db_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS {$_ENV['DB_NAME']};");
-
-    $pdo = new PDO(
-        "mysql:host={$_ENV['DB_HOST']};port={$_ENV['DB_PORT']};dbname={$_ENV['DB_NAME']}",
-        $_ENV['DB_USER'],
-        $_ENV['DB_PASS'],
-        [PDO::MYSQL_ATTR_MULTI_STATEMENTS => true]
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $db_init_queries = file_get_contents(__DIR__ . '/db-init.sql');
-    $pdo->exec($db_init_queries);
 }
 catch (PDOException $e) {
     error_log($e->getMessage());
-    exit;
+}
+finally {
+    fclose($lock_handle);
 }
