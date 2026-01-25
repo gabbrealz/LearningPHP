@@ -33,4 +33,15 @@ class UserRepository {
         $data = $get_user_data->fetch(PDO::FETCH_ASSOC);
         return $data ? new User($data['id'], $data['name'], $email, $data['role'], $data['password_hash']) : null;
     }
+
+    public function get_all_users(User|null $except = null): array {
+
+        $get_users_stmt = $except == null ?
+            $this->pdo->prepare('SELECT name, email, role FROM `User`') : 
+            $this->pdo->prepare('SELECT name, email, role FROM `User` WHERE id != ?');
+
+        $get_users_stmt->execute([$except->get_id()]);
+
+        return $get_users_stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
