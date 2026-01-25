@@ -13,7 +13,7 @@ class UserRepository {
         $insert_new_user = $this->pdo->prepare('INSERT INTO `User` (name, email, password_hash) VALUES (:name, :email, :password_hash);');
         $insert_new_user->execute([
             'name' => $user->name,
-            'email' => $user->get_email(),
+            'email' => $user->email,
             'password_hash' => $user->get_password()
         ]);
     }

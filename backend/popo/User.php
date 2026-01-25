@@ -3,7 +3,7 @@
 class User {
     private int $id;
     public string $name;
-    private string $email;
+    public string $email;
     private string $password;
     public string $role;
 
@@ -20,9 +20,6 @@ class User {
     }
 
     public function get_id(): int { return $this->id; }
-    
-    public function get_email(): string { return $this->email; }
-    public function set_email(String $email): void { $this->email = $email; }
 
     public function get_password(): string { return $this->password; }
     public function set_password(String $password, bool $pass_is_plaintext = false): void {
