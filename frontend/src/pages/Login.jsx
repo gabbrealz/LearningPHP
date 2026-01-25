@@ -42,7 +42,7 @@ export default function Login() {
         });
       }
       else {
-        setAuthenticatedUser(data.username);
+        setAuthenticatedUser(data.user);
         addToNotifs({
           bgcolor: "bg-green-700",
           message: data.message

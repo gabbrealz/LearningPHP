@@ -20,7 +20,7 @@ export default function App() {
     })
     .then(res => res.json())
     .then(data => {
-      if (data.authenticated) setAuthenticatedUser(data.username);
+      if (data.authenticated) setAuthenticatedUser(data.user);
     })
     .catch(error => console.log(error));
   }, []);

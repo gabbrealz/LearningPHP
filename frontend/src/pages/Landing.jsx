@@ -14,8 +14,8 @@ export default function Landing() {
               <span className="text-6xl mb-6 whitespace-nowrap">
                 Good day! Welcome back,
               </span>
-              <span className="text-6xl underline underline-offset-10 text-indigo-900">
-                {authenticatedUser}
+              <span className="mb-20 text-6xl underline underline-offset-10">
+                {authenticatedUser.name}
               </span>
             </>
             :

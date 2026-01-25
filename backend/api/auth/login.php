@@ -33,7 +33,7 @@ try {
             (new RememberMeTokenRepository($pdo))->add_rememberme($user->get_id());
 
         http_response_code(200);
-        echo json_encode(["username" => $user->name, "message" => "Successfully logged in!"]);
+        echo json_encode(["user" => $user, "message" => "Successfully logged in!"]);
         exit;
     }
 }

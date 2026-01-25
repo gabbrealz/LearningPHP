@@ -20,7 +20,7 @@ require __DIR__ . '/../../repository/RememberMeTokenRepository.php';
 http_response_code(200);
 
 if (isset($_SESSION["user"])) {
-    echo json_encode(["authenticated" => true, "username" => $_SESSION["user"]->name]);
+    echo json_encode(["authenticated" => true, "user" => $_SESSION["user"]]);
     exit;
 }
 
@@ -31,7 +31,7 @@ if (isset($_COOKIE[$_ENV['REMEMBERME_COOKIE_NAME']])) {
 
         if ($user) {
             $_SESSION['user'] = $user;
-            echo json_encode(["authenticated" => true, "username" => $user->name]);
+            echo json_encode(["authenticated" => true, "user" => $user->name]);
             exit;
         }
         else $rememberme_repo->remove_rememberme();
