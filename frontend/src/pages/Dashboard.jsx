@@ -55,7 +55,7 @@ export default function Dashboard() {
       <div className="size-full px-12 py-4 bg-gray-100 border-2 border-gray-400 rounded-lg overflow-y-scroll flex flex-col gap-4">
         {
           authenticatedUser ?
-            <div className="p-4 my-8 bg-white shadow-sm shadow-black rounded-md">
+            <div className="py-4 my-8 bg-white shadow-sm shadow-black rounded-md">
               <div className="w-9/10 text-center pb-2 mx-auto mb-4 border-b text-xl tracking-widest font-bold">
                 YOU
               </div>
