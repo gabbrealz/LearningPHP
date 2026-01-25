@@ -16,7 +16,7 @@ export const InterfaceProvider = ({ children }) => {
 
   return (
     <ModalDataContext.Provider value={{modalData, setModalData}}>
-      <NotifContext.Provider value={{notifStack, addToNotifs}}>
+      <NotifContext.Provider value={{notifStack, addToNotifs, setNotifStack}}>
         {children}
       </NotifContext.Provider>
     </ModalDataContext.Provider>
