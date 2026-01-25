@@ -17,6 +17,9 @@ export default function Landing() {
               <span className="mb-20 text-6xl underline underline-offset-10">
                 {authenticatedUser.name}
               </span>
+              <Link to="/dashboard" className=" px-6 py-3 bg-black text-white rounded-lg hover:scale-105 transition-[scale]">
+                Go To Dashboard
+              </Link>
             </>
             :
             <>

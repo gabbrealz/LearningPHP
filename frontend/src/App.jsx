@@ -5,6 +5,7 @@ import Header from './components/Header.jsx';
 import Notifications from './components/Notifications.jsx';
 import ModalDialog from './components/ModalDialog.jsx';
 import Landing from './pages/Landing.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
 import './assets/styles.css';
@@ -34,6 +35,7 @@ export default function App() {
         <ModalDialog />
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
         </Routes>
