@@ -29,9 +29,9 @@ There is more content coming soon, but for now there is only auth.
     echo DB_NAME=LearningPHP >> .env
     ```
 
-3. Add database user configuration in the `.env` file. The backend authenticates to your database as `root` to automatically set up the database. After the database setup, the backend will only authenticate as the user created from `DB_USER` and `DB_PASS`.
+3. Add DB user configuration in the `.env` file. The backend authenticates to your database as `root` to automatically set it up. After setting up, the backend will authenticate as a different user.
 
-    Please edit the final line by including your database root user's password (leave as is if your root user's password is blank).
+    Please edit the final line by including your DB root user's password (leave as is if your root user's password is blank).
     ```
     echo DB_USER=learningphp_admin >> .env
     echo DB_PASS=le4rn1ngphp_4dm1n_p4$$w0rd >> .env
@@ -39,7 +39,7 @@ There is more content coming soon, but for now there is only auth.
     ```
     <b>If you don't want the backend to use root:</b> Scroll down and follow the instructions under `Manual Database Setup` before running Apache.
 
-4. Create a symbolic link in `xampp/htdocs` pointing to `backend/api` using the commands below (or copy-paste the `backend/api` folder in `xampp/htdocs` and rename it to `php-backend`). The goal here is to expose only the backend API endpoints to the Apache web server.
+4. Create a symbolic link in `xampp/htdocs` pointing to `backend/api` using the commands below (or copy-paste the `backend/api` folder in `xampp/htdocs` and rename it to `php-backend`).
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
@@ -67,7 +67,7 @@ There is more content coming soon, but for now there is only auth.
     npm run build
     ```
 
-3. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` using the commands below (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`). The goal here is to expose only the static HTML, CSS, and JS files created from `npm run build` to the Apache web server.
+3. Create a symbolic link in `xampp/htdocs` pointing to `frontend/dist` using the commands below (or copy-paste the `frontend/dist` folder in `xampp/htdocs` and rename it to `webprog-activity`).
     - Linux
         ```bash
         cd "full/path/to/xampp/htdocs"
@@ -106,8 +106,7 @@ There is more content coming soon, but for now there is only auth.
 1. Open `XAMPP Control Panel`
 2. Start XAMPP's MySQL module and wait for the module to start running
 3. Click `Shell` at the right side of the Control Panel Window
-4. Connect to MySQL via the opened terminal:
-    Include `-p` if your database's root user has a password:
+4. Connect to MySQL via the opened terminal. Include `-p` if your database's root user has a password:
     ```
     mysql -u root [-p]
     ```
@@ -137,4 +136,4 @@ There is more content coming soon, but for now there is only auth.
         touch init-db-fromscratch.done
         ```
 
-    The existence of the `init-db-fromscratch.done` file tells the backend that the database and database user already exist, which stops it from trying to authenticate as `root`. However, table creation and seeding will still be handled by the backend.
+    The existence of the `init-db-fromscratch.done` file tells the backend that the database and database user already exist, which stops it from trying to authenticate as `root`. However, table creation and seeding will still be handled by the backend through the created user.
