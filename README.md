@@ -29,7 +29,7 @@ There is more content coming soon, but for now there is only auth.
     echo DB_NAME=LearningPHP >> .env
     ```
 
-3. Add DB user configuration in the `.env` file. The backend authenticates to your database as `root` to automatically set it up. After setting up, the backend will authenticate as a different user.
+3. Add DB user configuration in the `.env` file. The backend authenticates to your database as `root` to automatically set up the database from scratch. After setting up, the backend will authenticate as a different user.
 
     Please edit the final line by including your DB root user's password (leave as is if your root user's password is blank).
     ```
