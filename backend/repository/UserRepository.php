@@ -40,7 +40,7 @@ class UserRepository {
             $this->pdo->prepare('SELECT name, email, role FROM `User`') : 
             $this->pdo->prepare('SELECT name, email, role FROM `User` WHERE id != ?');
 
-        $get_users_stmt->execute([$except->get_id()]);
+        $get_users_stmt->execute($except == null ? 0 : [$except->get_id()]);
 
         return $get_users_stmt->fetchAll(PDO::FETCH_ASSOC);
     }
